@@ -23,6 +23,7 @@ security:
             pattern:   ^/api
             stateless: true
             jwt: ~
+            
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
@@ -32,6 +33,11 @@ security:
   
     access_control:
         - { path: ^/api/admin, roles: ROLE_ADMIN }
+        - { path: ^/api/equipe/create-equipe, roles: ROLE_ADMIN }
+        - { path: ^/api/equipe/update-president, roles: ROLE_ADMIN }
+        - { path: ^/api/equipe/informations, roles: [ROLE_ADMIN, ROLE_ENTRAINEUR] }
         - { path: ^/api/register, roles: PUBLIC_ACCESS  }
         - { path: ^/api/login, roles: PUBLIC_ACCESS  }
         - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+    
+    

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MedecinRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,9 +31,23 @@ class Medecin
     #[ORM\Column]
     private ?int $phone_number = null;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'medecins')]
-    private $user;
+    #[ORM\OneToOne(inversedBy: 'medecin')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $user = null;
 
+
+    #[ORM\ManyToOne(inversedBy: 'medecins')]
+    private ?Equipe $equipe = null;
+
+    #[ORM\OneToMany(mappedBy: 'medecin', targetEntity: ContratMedecin::class, cascade: ['persist', 'remove'])]
+    private Collection $contrats;
+
+
+    public function __construct()
+    {
+        $this->contrats = new ArrayCollection();
+    }
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +121,46 @@ class Medecin
     public function setUser(?User $user): self
     {
         $this->user = $user;
+        return $this;
+    }
+
+
+    public function getContrats(): Collection
+    {
+        return $this->contrats;
+    }
+
+    public function addContrat(ContratMedecin $contrat): self
+    {
+        if (!$this->contrats->contains($contrat)) {
+            $this->contrats->add($contrat);
+            $contrat->setMedecin($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContrat(ContratMedecin $contrat): self
+    {
+        if ($this->contrats->removeElement($contrat)) {
+            if ($contrat->getMedecin() === $this) {
+                $contrat->setMedecin(null);
+            }
+        }
+
+        return $this;
+    }
+    
+
+    public function getEquipe(): ?Equipe
+    {
+        return $this->equipe;
+    }
+
+    public function setEquipe(?Equipe $equipe): static
+    {
+        $this->equipe = $equipe;
+
         return $this;
     }
 }
