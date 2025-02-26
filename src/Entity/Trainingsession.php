@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: TrainingsessionRepository::class)]
 class Trainingsession
 {
+   
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -23,15 +24,16 @@ class Trainingsession
     private ?\DateTimeInterface $time = null;
 
     /**
-     * @var Collection<int, Task>
+     * @var array<int>
      */
-    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'trainingsession', cascade: ['persist', 'remove'])]
-    private Collection $tasks;
+    #[ORM\Column(type: Types::JSON)]
+    private array $tasks = [];
 
-    public function __construct()
-    {
-        $this->tasks = new ArrayCollection();
-    }
+     /**
+     * @var array<int>
+     */
+    #[ORM\Column(type: Types::JSON)]
+    private array $joueurs = [];
 
     public function getId(): ?int
     {
@@ -60,30 +62,24 @@ class Trainingsession
         return $this;
     }
 
-    /**
-     * @return Collection<int, Task>
-     */
-    public function getTasks(): Collection
+    public function getTasks(): array
     {
         return $this->tasks;
     }
 
-    public function addTask(Task $task): static
+    public function setTasks(array $tasks): static
     {
-        if (!$this->tasks->contains($task)) {
-            $this->tasks->add($task);
-            $task->setTrainingsession($this);
-        }
+        $this->tasks = $tasks;
         return $this;
     }
-
-    public function removeTask(Task $task): static
+    public function getJoueurs(): ?array
     {
-        if ($this->tasks->removeElement($task)) {
-            if ($task->getTrainingsession() === $this) {
-                $task->setTrainingsession(null);
-            }
-        }
+        return $this->joueurs;
+    }
+
+    public function setJoueurs(array $joueurs): self
+    {
+        $this->joueurs = $joueurs;
         return $this;
     }
 }

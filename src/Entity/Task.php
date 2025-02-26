@@ -23,9 +23,6 @@ class Task
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $duree = null;
 
-    #[ORM\ManyToOne(targetEntity: Trainingsession::class, inversedBy: 'tasks')]
-    private ?Trainingsession $trainingsession = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -61,17 +58,6 @@ class Task
     public function setDuree(?\DateTimeInterface $duree): static
     {
         $this->duree = $duree;
-        return $this;
-    }
-
-    public function getTrainingsession(): ?Trainingsession
-    {
-        return $this->trainingsession;
-    }
-
-    public function setTrainingsession(?Trainingsession $trainingsession): static
-    {
-        $this->trainingsession = $trainingsession;
         return $this;
     }
 }

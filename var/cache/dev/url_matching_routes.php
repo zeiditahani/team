@@ -25,7 +25,6 @@ return [
         '/api/admin/create-task' => [[['_route' => 'admin_create_task', '_controller' => 'App\\Controller\\AdminController::createTask'], null, ['POST' => 0], null, false, false, null]],
         '/api/admin/list-tasks' => [[['_route' => 'admin_list_tasks', '_controller' => 'App\\Controller\\AdminController::listTasks'], null, ['GET' => 0], null, false, false, null]],
         '/api/admin/create-trainingsession' => [[['_route' => 'admin_create_trainingsession', '_controller' => 'App\\Controller\\AdminController::createTrainingsession'], null, ['POST' => 0], null, false, false, null]],
-        '/api/admin/list-trainingsessions' => [[['_route' => 'admin_list_trainingsessions', '_controller' => 'App\\Controller\\AdminController::listTrainingsessions'], null, ['GET' => 0], null, false, false, null]],
         '/api/admin/create-medical-cost' => [[['_route' => 'admin_create_medical_cost', '_controller' => 'App\\Controller\\AdminController::createMedicalCost'], null, ['POST' => 0], null, false, false, null]],
         '/api/admin/list-medical-costs' => [[['_route' => 'admin_list_medical_costs', '_controller' => 'App\\Controller\\AdminController::listMedicalCosts'], null, ['GET' => 0], null, false, false, null]],
         '/api/dashboard' => [[['_route' => 'api_app_dashboard', '_controller' => 'App\\Controller\\DashboardController::index'], null, null, null, false, false, null]],
@@ -59,18 +58,28 @@ return [
                             .'|rainingsession/([^/]++)(*:321)'
                         .')'
                     .')'
-                    .'|desactiver\\-contrat\\-(?'
-                        .'|medecin/([^/]++)(*:371)'
-                        .'|entraineur/([^/]++)(*:398)'
-                        .'|joueur/([^/]++)(*:421)'
-                        .'|photographe/([^/]++)(*:449)'
+                    .'|de(?'
+                        .'|sactiver\\-contrat\\-(?'
+                            .'|medecin/([^/]++)(*:374)'
+                            .'|entraineur/([^/]++)(*:401)'
+                            .'|joueur/([^/]++)(*:424)'
+                            .'|photographe/([^/]++)(*:452)'
+                        .')'
+                        .'|lete\\-(?'
+                            .'|t(?'
+                                .'|ask/([^/]++)(*:486)'
+                                .'|rainingsession/([^/]++)(*:517)'
+                            .')'
+                            .'|medical\\-cost/([^/]++)(*:548)'
+                        .')'
                     .')'
                     .'|renouvellement\\-contrat\\-(?'
-                        .'|medecin/([^/]++)(*:502)'
-                        .'|joueur/([^/]++)(*:525)'
-                        .'|photographe/([^/]++)(*:553)'
+                        .'|medecin/([^/]++)(*:602)'
+                        .'|joueur/([^/]++)(*:625)'
+                        .'|photographe/([^/]++)(*:653)'
                     .')'
-                    .'|acheter\\-joueur/([^/]++)(*:586)'
+                    .'|acheter\\-joueur/([^/]++)(*:686)'
+                    .'|medical\\-costs/joueur/([^/]++)(*:724)'
                 .')'
             .')/?$}sDu',
     ],
@@ -85,16 +94,20 @@ return [
         241 => [[['_route' => 'admin_update_joueur', '_controller' => 'App\\Controller\\AdminController::updateJoueur'], ['id'], ['PUT' => 0, 'PATCH' => 1], null, false, true, null]],
         270 => [[['_route' => 'admin_update_talent', '_controller' => 'App\\Controller\\AdminController::updateTalent'], ['id'], ['PUT' => 0], null, false, true, null]],
         289 => [[['_route' => 'admin_update_task', '_controller' => 'App\\Controller\\AdminController::updateTask'], ['id'], ['PUT' => 0], null, false, true, null]],
-        321 => [[['_route' => 'admin_update_trainingsession', '_controller' => 'App\\Controller\\AdminController::updateTrainingsession'], ['id'], ['PUT' => 0], null, false, true, null]],
-        371 => [[['_route' => 'admin_desactiver_contrat_medecin', '_controller' => 'App\\Controller\\AdminController::desactiverContratMedecin'], ['medecin_id'], ['PATCH' => 0], null, false, true, null]],
-        398 => [[['_route' => 'admin_desactiver_contrat_entraineur', '_controller' => 'App\\Controller\\AdminController::desactiverContratEntraineur'], ['entraineur_id'], ['PATCH' => 0], null, false, true, null]],
-        421 => [[['_route' => 'admin_desactiver_contrat_joueur', '_controller' => 'App\\Controller\\AdminController::desactiverContrat'], ['joueur_id'], ['PATCH' => 0], null, false, true, null]],
-        449 => [[['_route' => 'admin_desactiver_contrat_photographe', '_controller' => 'App\\Controller\\AdminController::desactiverContratPhotographe'], ['photographe_id'], ['PATCH' => 0], null, false, true, null]],
-        502 => [[['_route' => 'admin_renouvellement_contrat-medecin', '_controller' => 'App\\Controller\\AdminController::createContratMedecin'], ['medecin_id'], ['POST' => 0], null, false, true, null]],
-        525 => [[['_route' => 'admin_renouvellement_contrat-joueur', '_controller' => 'App\\Controller\\AdminController::createContratJoueur'], ['joueur_id'], ['POST' => 0], null, false, true, null]],
-        553 => [[['_route' => 'admin_renouvellement_contrat_photographe', '_controller' => 'App\\Controller\\AdminController::createContratPhotographe'], ['photographe_id'], ['POST' => 0], null, false, true, null]],
-        586 => [
-            [['_route' => 'admin_acheter_joueur', '_controller' => 'App\\Controller\\AdminController::acheterJoueur'], ['id'], ['POST' => 0], null, false, true, null],
+        321 => [[['_route' => 'admin_update_trainingsession', '_controller' => 'App\\Controller\\AdminController::updateTrainingSession'], ['id'], ['PUT' => 0], null, false, true, null]],
+        374 => [[['_route' => 'admin_desactiver_contrat_medecin', '_controller' => 'App\\Controller\\AdminController::desactiverContratMedecin'], ['medecin_id'], ['PATCH' => 0], null, false, true, null]],
+        401 => [[['_route' => 'admin_desactiver_contrat_entraineur', '_controller' => 'App\\Controller\\AdminController::desactiverContratEntraineur'], ['entraineur_id'], ['PATCH' => 0], null, false, true, null]],
+        424 => [[['_route' => 'admin_desactiver_contrat_joueur', '_controller' => 'App\\Controller\\AdminController::desactiverContrat'], ['joueur_id'], ['PATCH' => 0], null, false, true, null]],
+        452 => [[['_route' => 'admin_desactiver_contrat_photographe', '_controller' => 'App\\Controller\\AdminController::desactiverContratPhotographe'], ['photographe_id'], ['PATCH' => 0], null, false, true, null]],
+        486 => [[['_route' => 'admin_delete_task', '_controller' => 'App\\Controller\\AdminController::deleteTask'], ['id'], ['DELETE' => 0], null, false, true, null]],
+        517 => [[['_route' => 'admin_delete_training_session', '_controller' => 'App\\Controller\\AdminController::deleteTrainingSession'], ['id'], ['DELETE' => 0], null, false, true, null]],
+        548 => [[['_route' => 'admin_delete_medical_cost', '_controller' => 'App\\Controller\\AdminController::deleteMedicalCost'], ['id'], ['DELETE' => 0], null, false, true, null]],
+        602 => [[['_route' => 'admin_renouvellement_contrat-medecin', '_controller' => 'App\\Controller\\AdminController::createContratMedecin'], ['medecin_id'], ['POST' => 0], null, false, true, null]],
+        625 => [[['_route' => 'admin_renouvellement_contrat-joueur', '_controller' => 'App\\Controller\\AdminController::createContratJoueur'], ['joueur_id'], ['POST' => 0], null, false, true, null]],
+        653 => [[['_route' => 'admin_renouvellement_contrat_photographe', '_controller' => 'App\\Controller\\AdminController::createContratPhotographe'], ['photographe_id'], ['POST' => 0], null, false, true, null]],
+        686 => [[['_route' => 'admin_acheter_joueur', '_controller' => 'App\\Controller\\AdminController::acheterJoueur'], ['id'], ['POST' => 0], null, false, true, null]],
+        724 => [
+            [['_route' => 'admin_get_medical_costs_by_joueur', '_controller' => 'App\\Controller\\AdminController::getMedicalCostsByJoueur'], ['joueurId'], ['GET' => 0], null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],
     ],

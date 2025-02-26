@@ -1438,38 +1438,62 @@ class AdminController extends AbstractController
     //*****************************
 
     #[Route('/create-task', name: 'create_task', methods: ['POST'])]
-public function createTask(Request $request, EntityManagerInterface $entityManager): JsonResponse
-{
-    $data = json_decode($request->getContent(), true);
+    public function createTask(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
 
-    // Vérification des champs obligatoires
-    if (empty($data['nom']) || empty($data['type'])) {
-        return new JsonResponse(['error' => 'Nom et type sont requis'], 400);
+           // Vérification des champs obligatoires
+    if (!isset($data['nom']) || empty($data['nom'])){
+        return $this->json(['error' => 'Le nom de task est requis'], 400);
+    }
+
+    if (!isset($data['type']) || empty($data['type'])){
+        return $this->json(['error' => 'Le type de task est requis'], 400);
+    }
+    if (!isset($data['duree']) || empty($data['duree'])){
+        return $this->json(['error' => 'Le duree de task est requis'], 400);
     }
 
     $task = new Task();
     $task->setNom($data['nom']);
     $task->setType($data['type']);
+    //$task->setDuree($data['duree']);
+    
 
+    if (!empty($data['duree'])) {
+    try {
+        // Vérification du format HH:MM:SS
+        $timeParts = explode(':', $data['duree']);
+        if (count($timeParts) !== 3) {
+            return new JsonResponse(['error' => 'Format de durée invalide, attendu HH:MM:SS'], 400);
+        }
+
+        // Création d'un objet DateTime uniquement avec l'heure
+        $date = new \DateTime();
+        $date->setTime((int) $timeParts[0], (int) $timeParts[1], (int) $timeParts[2]);
+
+        $task->setDuree($date);
+    } catch (\Exception $e) {
+        return new JsonResponse(['error' => 'Format de durée invalide'], 400);
+    }
+    }
     // Vérification et conversion de la durée
     if (!empty($data['duree'])) {
         try {
-            $task->setDuree(new \DateTime($data['duree']));
+            // Vérification du format HH:MM:SS
+            $timeParts = explode(':', $data['duree']);
+            if (count($timeParts) !== 3) {
+                return new JsonResponse(['error' => 'Format de durée invalide, attendu HH:MM:SS'], 400);
+            }
+    
+            // Création d'un objet DateTime uniquement avec l'heure
+            $date = new \DateTime();
+            $date->setTime((int) $timeParts[0], (int) $timeParts[1], (int) $timeParts[2]);
+    
+            $task->setDuree($date);
         } catch (\Exception $e) {
             return new JsonResponse(['error' => 'Format de durée invalide'], 400);
         }
-    }
-
-    // Association avec une session d'entraînement
-    if (!empty($data['trainingsession_id'])) {
-        $trainingsession = $entityManager->getRepository(Trainingsession::class)->find($data['trainingsession_id']);
-
-        if (!$trainingsession) {
-            return new JsonResponse(['error' => 'Session d\'entraînement non trouvée'], 404);
-        }
-
-        $task->setTrainingsession($trainingsession);
-        $trainingsession->addTask($task); // Associer aussi la tâche à la session
     }
 
     // Enregistrement dans la base de données
@@ -1485,12 +1509,12 @@ public function createTask(Request $request, EntityManagerInterface $entityManag
             'duree' => $task->getDuree()?->format('H:i:s'),
         ]
     ], 201);
-}
+    }
 
 
-#[Route('/update-task/{id}', name: 'update_task', methods: ['PUT'])]
-public function updateTask(int $id, Request $request, EntityManagerInterface $entityManager): JsonResponse
-{
+    #[Route('/update-task/{id}', name: 'update_task', methods: ['PUT'])]
+    public function updateTask(int $id, Request $request, EntityManagerInterface $entityManager): JsonResponse
+    {
     $task = $entityManager->getRepository(Task::class)->find($id);
 
     if (!$task) {
@@ -1526,44 +1550,95 @@ public function updateTask(int $id, Request $request, EntityManagerInterface $en
             'duree' => $task->getDuree()?->format('H:i:s'),
         ]
     ]);
-}
-
-
-#[Route('/list-tasks', name: 'list_tasks', methods: ['GET'])]
-public function listTasks(EntityManagerInterface $entityManager): JsonResponse
-{
-    $tasks = $entityManager->getRepository(Task::class)->findAll();
-
-    $tasksArray = [];
-    foreach ($tasks as $task) {
-        $tasksArray[] = [
-            'id' => $task->getId(),
-            'nom' => $task->getNom(),
-            'type' => $task->getType(),
-            'duree' => $task->getDuree()?->format('H:i:s'),
-        ];
     }
 
-    return new JsonResponse($tasksArray);
-}
-//*********************************
-#[Route('/create-trainingsession', name: 'create_trainingsession', methods: ['POST'])]
-public function createTrainingsession(Request $request, EntityManagerInterface $entityManager): JsonResponse
-{
-    $data = json_decode($request->getContent(), true);
 
-    if (empty($data['date']) || empty($data['time'])) {
-        return new JsonResponse(['error' => 'La date et l\'heure sont requises'], 400);
+    #[Route('/list-tasks', name: 'list_tasks', methods: ['GET'])]
+    public function listTasks(EntityManagerInterface $entityManager): JsonResponse
+    {
+        $tasks = $entityManager->getRepository(Task::class)->findAll();
+
+        $tasksArray = [];
+        foreach ($tasks as $task) {
+            $tasksArray[] = [
+                'id' => $task->getId(),
+                'nom' => $task->getNom(),
+                'type' => $task->getType(),
+                'duree' => $task->getDuree()?->format('H:i:s'),
+            ];
+        }
+    
+        return new JsonResponse($tasksArray);
     }
 
-    try {
+    #[Route('/delete-task/{id}', name: 'delete_task', methods: ['DELETE'])]
+    public function deleteTask(int $id, ManagerRegistry $doctrine): JsonResponse
+    {
+        $em = $doctrine->getManager();
+        $task = $em->getRepository(Task::class)->find($id);
+    
+        if (!$task) {
+            return $this->json(['error' => 'Task non trouve'], 404);
+        }
+    
+        // Suppression de la task dans toutes les TrainingSessions
+        $trainingSessions = $em->getRepository(TrainingSession::class)->findAll();
+        foreach ($trainingSessions as $session) {
+            $tasks = $session->getTasks();
+            if (in_array($id, $tasks)) {
+                $tasks = array_filter($tasks, fn($taskId) => $taskId !== $id);
+                $session->setTasks(array_values($tasks)); // Réindexation du tableau
+            }
+        }
+    
+        $em->remove($task);
+        $em->flush();
+    
+        return $this->json(['message' => 'Task supprimé avec success']);
+    }
+    //****************************** 
+    #[Route('/create-trainingsession', name: 'create_trainingsession', methods: ['POST'])]
+    public function createTrainingsession(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+    
+        // Liste des champs requis
+        $champsRequis = ['date', 'time', 'joueurs', 'tasks'];
+        foreach ($champsRequis as $champ) {
+            if (empty($data[$champ])) {
+                return $this->json(['error' => "Le champ '$champ' est requis"], 400);
+            }
+        }
+    
+        try {
+            $date = new \DateTime($data['date']);
+            $time = new \DateTime($data['time']);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => 'Format de date ou d\'heure invalide'], 400);
+        }
+    
+        // Vérification des joueurs et des tâches
+        $joueurs = $entityManager->getRepository(Joueur::class)->findBy(['id' => $data['joueurs']]);
+        $tasks = $entityManager->getRepository(Task::class)->findBy(['id' => $data['tasks']]);
+    
+        if (count($joueurs) !== count($data['joueurs'])) {
+            return $this->json(['error' => 'Un ou plusieurs joueurs n\'existent pas'], 400);
+        }
+    
+        if (count($tasks) !== count($data['tasks'])) {
+            return $this->json(['error' => 'Une ou plusieurs tâches n\'existent pas'], 400);
+        }
+    
+        // Création et enregistrement de la session d'entraînement
         $trainingsession = new Trainingsession();
-        $trainingsession->setDate(new \DateTime($data['date']));
-        $trainingsession->setTime(new \DateTime($data['time']));
-
+        $trainingsession->setDate($date);
+        $trainingsession->setTime($time);
+        $trainingsession->setJoueurs($joueurs);
+        $trainingsession->setTasks($tasks);
+    
         $entityManager->persist($trainingsession);
         $entityManager->flush();
-
+    
         return new JsonResponse([
             'message' => 'Session d\'entraînement créée avec succès',
             'trainingsession' => [
@@ -1572,159 +1647,226 @@ public function createTrainingsession(Request $request, EntityManagerInterface $
                 'time' => $trainingsession->getTime()->format('H:i:s'),
             ]
         ], 201);
-    } catch (\Exception $e) {
-        return new JsonResponse(['error' => 'Format de date ou d\'heure invalide'], 400);
     }
-}
+    #[Route('/update-trainingsession/{id}', name: 'update_trainingsession', methods: ['PUT'])]
+    public function updateTrainingSession(int $id, Request $request, ManagerRegistry $doctrine): JsonResponse
+    {
+        $em = $doctrine->getManager();
+        $trainingSession = $em->getRepository(TrainingSession::class)->find($id);
 
-#[Route('/update-trainingsession/{id}', name: 'update_trainingsession', methods: ['PUT'])]
-public function updateTrainingsession(int $id, Request $request, EntityManagerInterface $entityManager): JsonResponse
-{
-    $trainingsession = $entityManager->getRepository(Trainingsession::class)->find($id);
-
-    if (!$trainingsession) {
-        return new JsonResponse(['error' => 'Session d\'entraînement non trouvée'], 404);
-    }
-
-    $data = json_decode($request->getContent(), true);
-
-    if (!empty($data['date'])) {
-        try {
-            $trainingsession->setDate(new \DateTime($data['date']));
-        } catch (\Exception $e) {
-            return new JsonResponse(['error' => 'Format de date invalide'], 400);
+        if (!$trainingSession) {
+            return $this->json(['error' => 'Training session n\'est pas trouvé'], 404);
         }
-    }
 
-    if (!empty($data['time'])) {
-        try {
-            $trainingsession->setTime(new \DateTime($data['time']));
-        } catch (\Exception $e) {
-            return new JsonResponse(['error' => 'Format de l\'heure invalide'], 400);
+        $data = json_decode($request->getContent(), true);
+
+        // Mise à jour de la date et de l'heure
+        if (isset($data['date']) && !empty($data['date']) ) {
+            $trainingSession->setDate(new \DateTime($data['date']));
         }
+        if (isset($data['time']) && !empty($data['time'])) {
+            $trainingSession->setTime(new \DateTime($data['time']));
+        }
+
+        // Vérification et mise à jour des joueurs
+        if (isset($data['joueurs']) && !empty($data['joueurs'])) {
+            $joueursExistants = $em->getRepository(Joueur::class)->findBy(['id' => $data['joueurs']]);
+            $joueursIdsExistants = array_map(fn($joueur) => $joueur->getId(), $joueursExistants);
+
+            if (count($joueursIdsExistants) !== count($data['joueurs'])) {
+                return $this->json(['error' => 'Un ou plusieurs ID joueurs non valides'], 400);
+            }
+
+            $trainingSession->setJoueurs($joueursIdsExistants);
+        }
+
+        // Vérification et mise à jour des tasks
+        if (isset($data['tasks']) && !empty($data['tasks'])) {
+            $tasksExistantes = $em->getRepository(Task::class)->findBy(['id' => $data['tasks']]);
+            $tasksIdsExistants = array_map(fn($task) => $task->getId(), $tasksExistantes);
+
+            if (count($tasksIdsExistants) !== count($data['tasks'])) {
+                return $this->json(['error' => 'Un ou plusieurs ID tasks non valides'], 400);
+            }
+
+            $trainingSession->setTasks($tasksIdsExistants);
+        }
+
+        $em->flush();
+
+        return $this->json(['message' => 'Training session mis à jour avec succès']);
+    }
+       
+    #[Route('/delete-trainingsession/{id}', name: 'delete_training_session', methods: ['DELETE'])]
+    public function deleteTrainingSession(int $id, ManagerRegistry $doctrine): JsonResponse
+    {
+        $em = $doctrine->getManager();
+        $trainingSession = $em->getRepository(TrainingSession::class)->find($id);
+
+        if (!$trainingSession) {
+            return $this->json(['error' => 'Training session n\'est pas trouvé'], 404);
+        }
+
+        $em->remove($trainingSession);
+        $em->flush();
+
+        return $this->json(['message' => 'Training session supprimé avec success']);
     }
 
-    $entityManager->flush();
 
-    return new JsonResponse([
-        'message' => 'Session d\'entraînement mise à jour avec succès',
-        'trainingsession' => [
-            'id' => $trainingsession->getId(),
-            'date' => $trainingsession->getDate()->format('Y-m-d'),
-            'time' => $trainingsession->getTime()->format('H:i:s'),
-        ]
-    ]);
-}
+    //**************
+    #[Route('/create-medical-cost', name: 'create_medical_cost', methods: ['POST'])]
+    public function createMedicalCost(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
 
+        if (!isset($data['joueur_id']) || empty($data['joueur_id'])) {
+            return new JsonResponse(['error' => 'L\'id du joueur est requis'], 400);
+        }
 
-#[Route('/list-trainingsessions', name: 'list_trainingsessions', methods: ['GET'])]
-public function listTrainingsessions(EntityManagerInterface $entityManager): JsonResponse
-{
-    $trainingsessions = $entityManager->getRepository(Trainingsession::class)->findAll();
+        if (!isset($data['description']) || empty($data['description'])) {
+            return new JsonResponse(['error' => 'La description est requis'], 400);
+        }
 
-    $sessionsArray = [];
-    foreach ($trainingsessions as $session) {
-        $sessionsArray[] = [
-            'id' => $session->getId(),
-            'date' => $session->getDate()->format('Y-m-d'),
-            'time' => $session->getTime()->format('H:i:s'),
-        ];
-    }
-
-    return new JsonResponse($sessionsArray);
-}
-
-//****************************************
-#[Route('/create-medical-cost', name: 'create_medical_cost', methods: ['POST'])]
-public function createMedicalCost(Request $request, EntityManagerInterface $entityManager): JsonResponse
-{
-    $data = json_decode($request->getContent(), true);
-
-    if (empty($data['description']) || empty($data['joueur_id'])) {
-        return new JsonResponse(['error' => 'La description et le joueur sont requis'], 400);
-    }
-
-    $joueur = $entityManager->getRepository(Joueur::class)->find($data['joueur_id']);
-    if (!$joueur) {
-        return new JsonResponse(['error' => 'Joueur non trouvé'], 404);
-    }
-
-    $medicalCost = new MedicalCost();
-    $medicalCost->setDescription($data['description']);
-    $medicalCost->setCosts($data['costs'] ?? null);
-    $medicalCost->setJoueur($joueur);
-
-    $entityManager->persist($medicalCost);
-    $entityManager->flush();
-
-    return new JsonResponse([
-        'message' => 'Coût médical créé avec succès',
-        'medical_cost' => [
-            'id' => $medicalCost->getId(),
-            'description' => $medicalCost->getDescription(),
-            'costs' => $medicalCost->getCosts(),
-            'joueur_id' => $joueur->getId()
-        ]
-    ], 201);
-}
-
-
-#[Route('/update-medical-cost/{id}', name: 'update_medical_cost', methods: ['PUT'])]
-public function updateMedicalCost(int $id, Request $request, EntityManagerInterface $entityManager): JsonResponse
-{
-    $medicalCost = $entityManager->getRepository(MedicalCost::class)->find($id);
-
-    if (!$medicalCost) {
-        return new JsonResponse(['error' => 'Coût médical non trouvé'], 404);
-    }
-
-    $data = json_decode($request->getContent(), true);
-
-    if (!empty($data['description'])) {
-        $medicalCost->setDescription($data['description']);
-    }
-
-    if (isset($data['costs'])) {
-        $medicalCost->setCosts($data['costs']);
-    }
-
-    if (!empty($data['joueur_id'])) {
         $joueur = $entityManager->getRepository(Joueur::class)->find($data['joueur_id']);
         if (!$joueur) {
             return new JsonResponse(['error' => 'Joueur non trouvé'], 404);
         }
+
+        $medicalCost = new MedicalCost();
+        $medicalCost->setDescription($data['description']);
+        $medicalCost->setCosts($data['costs']);
         $medicalCost->setJoueur($joueur);
+
+        $entityManager->persist($medicalCost);
+        $entityManager->flush();
+
+        return new JsonResponse([
+            'message' => 'Coût médical créé avec succès',
+            'medical_cost' => [
+                'id' => $medicalCost->getId(),
+                'description' => $medicalCost->getDescription(),
+                'costs' => $medicalCost->getCosts(),
+                'joueur_id' => $joueur->getId()
+            ]
+        ], 201);
     }
 
-    $entityManager->flush();
+    // ***** 
 
-    return new JsonResponse([
-        'message' => 'Coût médical mis à jour avec succès',
-        'medical_cost' => [
-            'id' => $medicalCost->getId(),
-            'description' => $medicalCost->getDescription(),
-            'costs' => $medicalCost->getCosts(),
-            'joueur_id' => $medicalCost->getJoueur()->getId()
-        ]
-    ]);
-}
-#[Route('/list-medical-costs', name: 'list_medical_costs', methods: ['GET'])]
-public function listMedicalCosts(EntityManagerInterface $entityManager): JsonResponse
-{
-    $medicalCosts = $entityManager->getRepository(MedicalCost::class)->findAll();
+    #[Route('/list-medical-costs', name: 'list_medical_costs', methods: ['GET'])]
+    public function listMedicalCosts(EntityManagerInterface $entityManager): JsonResponse
+    {
+        $medicalCosts = $entityManager->getRepository(MedicalCost::class)->findAll();
 
-    $costsArray = [];
-    foreach ($medicalCosts as $cost) {
-        $costsArray[] = [
-            'id' => $cost->getId(),
-            'description' => $cost->getDescription(),
-            'costs' => $cost->getCosts(),
-            'joueur_id' => $cost->getJoueur()->getId(),
-        ];
+        $costsArray = [];
+        foreach ($medicalCosts as $cost) {
+            $joueur = $cost->getJoueur();
+            $costsArray[] = [
+                'id' => $cost->getId(),
+                'description' => $cost->getDescription(),
+                'costs' => $cost->getCosts(),
+                'joueur' => [
+                    'id' => $joueur->getId(),
+                    'firstname' => $joueur->getFirstname(),
+                    'lastname' => $joueur->getLastname(),
+                ]
+            ];
+        }
+
+        return new JsonResponse($costsArray);
     }
 
-    return new JsonResponse($costsArray);
-}
+    // *****
+
+    #[Route('/update-medical-cost/{id}', name: 'update_medical_cost', methods: ['PUT'])]
+    public function updateMedicalCost(int $id, Request $request, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $medicalCost = $entityManager->getRepository(MedicalCost::class)->find($id);
+
+        $joueur = $medicalCost->getJoueur();
+
+        if (!$medicalCost) {
+            return new JsonResponse(['error' => 'Coût médical non trouvé'], 404);
+        }
+
+        $data = json_decode($request->getContent(), true);
+
+        if (isset($data['description']) && !empty($data['description'])) {
+            $medicalCost->setDescription($data['description']);
+        }
+
+        if (isset($data['costs']) && !empty($data['costs'])) {
+            $medicalCost->setCosts($data['costs']);
+        }
+
+        $entityManager->flush();
+
+        return new JsonResponse([
+            'message' => 'Coût médical mis à jour avec succès',
+            'medical_cost' => [
+                'id' => $medicalCost->getId(),
+                'description' => $medicalCost->getDescription(),
+                'costs' => $medicalCost->getCosts(),
+                'joueur' => [
+                    'id' => $joueur->getId(),
+                    'firstname' => $joueur->getFirstname(),
+                    'lastname' => $joueur->getLastname(),
+                ]
+            ]
+        ]);
+    }
+
+    // ***********
+
+    #[Route('/delete-medical-cost/{id}', name: 'delete_medical_cost', methods: ['DELETE'])]
+    public function deleteMedicalCost(int $id, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $medicalCost = $entityManager->getRepository(MedicalCost::class)->find($id);
+
+        if (!$medicalCost) {
+            return new JsonResponse(['error' => 'Coût médical non trouvé'], 404);
+        }
+
+        $entityManager->remove($medicalCost);
+        $entityManager->flush();
+
+        return new JsonResponse(['message' => 'Coût médical supprimé avec succès']);
+    }
+
+    // *********
+
+    #[Route('/medical-costs/joueur/{joueurId}', name: 'get_medical_costs_by_joueur', methods: ['GET'])]
+    public function getMedicalCostsByJoueur(int $joueurId, EntityManagerInterface $entityManager): JsonResponse
+    {
+        // Récupérer le joueur
+        $joueur = $entityManager->getRepository(Joueur::class)->find($joueurId);
+
+        if (!$joueur) {
+            return new JsonResponse(['error' => 'Joueur non trouvé'], 404);
+        }
+
+        // Récupérer les coûts médicaux associés à ce joueur
+        $medicalCosts = $entityManager->getRepository(MedicalCost::class)->findBy(['joueur' => $joueur]);
+
+        // Vérifier si le joueur n'a pas de coûts médicaux
+        if (empty($medicalCosts)) {
+            return new JsonResponse(['message' => 'Aucun coût médical trouvé pour ce joueur'], 200);
+        }
+
+        // Récupérer les coûts médicaux
+        $costsArray = [];
+        foreach ($medicalCosts as $cost) {
+            $costsArray[] = [
+                'id' => $cost->getId(),
+                'description' => $cost->getDescription(),
+                'costs' => $cost->getCosts(),
+            ];
+        }
+
+        return new JsonResponse($costsArray);
+    }
+    
+
 
 }
-

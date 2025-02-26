@@ -353,7 +353,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag priority="-50" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator.T7GlJNB"/>
+      <argument type="service" id=".service_locator.tRbC8mS"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag priority="-100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">controller.argument_value_resolver</tag>
@@ -1552,7 +1552,7 @@
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator.T7GlJNB"/>
+      <argument type="service" id=".service_locator.tRbC8mS"/>
     </service>
     <service id="routing.resolver" class="Symfony\Component\Config\Loader\LoaderResolver">
       <call method="addLoader">
@@ -5421,7 +5421,7 @@
         <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
       </argument>
     </service>
-    <service id=".service_locator.T7GlJNB" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.tRbC8mS" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\AdminController::acheterJoueur" type="service_closure" id=".service_locator.cjJGr32"/>
@@ -5438,11 +5438,15 @@
         <argument key="App\Controller\AdminController::createTalent" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\AdminController::createTask" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\AdminController::createTrainingsession" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\AdminController::deleteMedicalCost" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\AdminController::deleteTask" type="service_closure" id=".service_locator.o6sN0hZ"/>
+        <argument key="App\Controller\AdminController::deleteTrainingSession" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\AdminController::desactiverContrat" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\AdminController::desactiverContratEntraineur" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\AdminController::desactiverContratMedecin" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\AdminController::desactiverContratPhotographe" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\AdminController::getKines" type="service_closure" id=".service_locator.DmgBfU7"/>
+        <argument key="App\Controller\AdminController::getMedicalCostsByJoueur" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\AdminController::getTalents" type="service_closure" id=".service_locator.aeiw.FA"/>
         <argument key="App\Controller\AdminController::listEntraineurs" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\AdminController::listJoueurs" type="service_closure" id=".service_locator.o6sN0hZ"/>
@@ -5451,7 +5455,6 @@
         <argument key="App\Controller\AdminController::listPhotographes" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\AdminController::listPresidents" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\AdminController::listTasks" type="service_closure" id=".service_locator.CsMkqUa"/>
-        <argument key="App\Controller\AdminController::listTrainingsessions" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\AdminController::updateEntraineur" type="service_closure" id=".service_locator.04rvWvA"/>
         <argument key="App\Controller\AdminController::updateJoueur" type="service_closure" id=".service_locator.04rvWvA"/>
         <argument key="App\Controller\AdminController::updateKine" type="service_closure" id=".service_locator.04rvWvA"/>
@@ -5461,7 +5464,7 @@
         <argument key="App\Controller\AdminController::updatePresident" type="service_closure" id=".service_locator.04rvWvA"/>
         <argument key="App\Controller\AdminController::updateTalent" type="service_closure" id=".service_locator.4jseNyd"/>
         <argument key="App\Controller\AdminController::updateTask" type="service_closure" id=".service_locator.CsMkqUa"/>
-        <argument key="App\Controller\AdminController::updateTrainingsession" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\AdminController::updateTrainingSession" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\EquipeController::createEquipe" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\EquipeController::getEquipe" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\EquipeController::updatePresident" type="service_closure" id=".service_locator.o6sN0hZ"/>
@@ -5484,11 +5487,15 @@
         <argument key="App\Controller\AdminController:createTalent" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\AdminController:createTask" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\AdminController:createTrainingsession" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\AdminController:deleteMedicalCost" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\AdminController:deleteTask" type="service_closure" id=".service_locator.o6sN0hZ"/>
+        <argument key="App\Controller\AdminController:deleteTrainingSession" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\AdminController:desactiverContrat" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\AdminController:desactiverContratEntraineur" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\AdminController:desactiverContratMedecin" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\AdminController:desactiverContratPhotographe" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\AdminController:getKines" type="service_closure" id=".service_locator.DmgBfU7"/>
+        <argument key="App\Controller\AdminController:getMedicalCostsByJoueur" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\AdminController:getTalents" type="service_closure" id=".service_locator.aeiw.FA"/>
         <argument key="App\Controller\AdminController:listEntraineurs" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\AdminController:listJoueurs" type="service_closure" id=".service_locator.o6sN0hZ"/>
@@ -5497,7 +5504,6 @@
         <argument key="App\Controller\AdminController:listPhotographes" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\AdminController:listPresidents" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\AdminController:listTasks" type="service_closure" id=".service_locator.CsMkqUa"/>
-        <argument key="App\Controller\AdminController:listTrainingsessions" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\AdminController:updateEntraineur" type="service_closure" id=".service_locator.04rvWvA"/>
         <argument key="App\Controller\AdminController:updateJoueur" type="service_closure" id=".service_locator.04rvWvA"/>
         <argument key="App\Controller\AdminController:updateKine" type="service_closure" id=".service_locator.04rvWvA"/>
@@ -5507,7 +5513,7 @@
         <argument key="App\Controller\AdminController:updatePresident" type="service_closure" id=".service_locator.04rvWvA"/>
         <argument key="App\Controller\AdminController:updateTalent" type="service_closure" id=".service_locator.4jseNyd"/>
         <argument key="App\Controller\AdminController:updateTask" type="service_closure" id=".service_locator.CsMkqUa"/>
-        <argument key="App\Controller\AdminController:updateTrainingsession" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\AdminController:updateTrainingSession" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\EquipeController:createEquipe" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\EquipeController:getEquipe" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\EquipeController:updatePresident" type="service_closure" id=".service_locator.o6sN0hZ"/>
@@ -7011,7 +7017,7 @@
     <service id="Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface" alias="lexik_jwt_authentication.encoder.lcobucci"/>
     <service id="lexik_jwt_authentication.key_loader" alias="lexik_jwt_authentication.key_loader.raw" public="true"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.w7.f4fT" public="true"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.T7GlJNB"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.tRbC8mS"/>
     <service id="jms_serializer.authorization_checker" alias="security.authorization_checker" public="true"/>
     <service id="fos_rest.serializer" alias="fos_rest.serializer.jms"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
@@ -7024,7 +7030,7 @@
     <service id=".service_locator.dTaHD7m" alias=".service_locator.04rvWvA"/>
     <service id=".service_locator.wXLaEHu" alias=".service_locator.I4Ot7PZ"/>
     <service id=".service_locator.2x8EHXZ" alias=".service_locator.cjJGr32"/>
-    <service id=".service_locator.ElXF9vC" alias=".service_locator.T7GlJNB"/>
+    <service id=".service_locator.IC5uzW2" alias=".service_locator.tRbC8mS"/>
     <service id=".service_locator.LMuqDDe" alias=".service_locator.VHsrTPK"/>
     <service id=".service_locator.jUv.zyj" alias=".service_locator.O2p6Lk7"/>
     <service id="event_dispatcher" alias="debug.event_dispatcher" public="true"/>
