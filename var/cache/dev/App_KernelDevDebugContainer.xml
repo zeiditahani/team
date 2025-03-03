@@ -230,6 +230,13 @@
         <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\EquipeController"/>
       </call>
     </service>
+    <service id="App\Controller\FanController" class="App\Controller\FanController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\FanController"/>
+      </call>
+    </service>
     <service id="App\Controller\RegistrationController" class="App\Controller\RegistrationController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
@@ -287,6 +294,14 @@
       <argument type="service" id="doctrine"/>
     </service>
     <service id="App\Repository\EquipeRepository" class="App\Repository\EquipeRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="App\Repository\FanRepository" class="App\Repository\FanRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="App\Repository\FanRevenueRepository" class="App\Repository\FanRevenueRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
@@ -353,7 +368,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag priority="-50" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator.tRbC8mS"/>
+      <argument type="service" id=".service_locator.6eT37Cr"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag priority="-100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">controller.argument_value_resolver</tag>
@@ -1552,7 +1567,7 @@
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator.tRbC8mS"/>
+      <argument type="service" id=".service_locator.6eT37Cr"/>
     </service>
     <service id="routing.resolver" class="Symfony\Component\Config\Loader\LoaderResolver">
       <call method="addLoader">
@@ -3244,7 +3259,7 @@
     <service id="doctrine.orm.configuration" class="Doctrine\ORM\Configuration" abstract="true"/>
     <service id="doctrine.orm.entity_manager.abstract" class="Doctrine\ORM\EntityManager" lazy="true" abstract="true"/>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory">
-      <argument type="service" id=".service_locator.Xx.9Hus"/>
+      <argument type="service" id=".service_locator.LBIpy6C"/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -4026,6 +4041,13 @@
         </argument>
         <argument>null</argument>
       </call>
+      <call method="add">
+        <argument type="service" id=".security.request_matcher.BzoQSwb"/>
+        <argument type="collection">
+          <argument>ROLE_ADMIN</argument>
+        </argument>
+        <argument>null</argument>
+      </call>
     </service>
     <service id="security.context_listener" class="Symfony\Component\Security\Http\Firewall\ContextListener">
       <tag name="monolog.logger" channel="security"/>
@@ -4700,6 +4722,14 @@
         <argument type="service" id=".security.request_matcher.AMZT15Y"/>
       </argument>
     </service>
+    <service id=".security.request_matcher.USXqf_T" class="Symfony\Component\HttpFoundation\RequestMatcher\PathRequestMatcher">
+      <argument>^/api/fan</argument>
+    </service>
+    <service id=".security.request_matcher.BzoQSwb" class="Symfony\Component\HttpFoundation\ChainRequestMatcher">
+      <argument type="collection">
+        <argument type="service" id=".security.request_matcher.USXqf_T"/>
+      </argument>
+    </service>
     <service id="security.command.user_password_hash" class="Symfony\Component\PasswordHasher\Command\UserPasswordHashCommand">
       <tag name="console.command"/>
       <tag name="container.no_preload"/>
@@ -4886,6 +4916,9 @@
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\EquipeController" class="App\Controller\EquipeController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\EquipeController" class="App\Controller\EquipeController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\EquipeController" class="App\Controller\EquipeController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\FanController" class="App\Controller\FanController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\FanController" class="App\Controller\FanController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\FanController" class="App\Controller\FanController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\RegistrationController" class="App\Controller\RegistrationController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\RegistrationController" class="App\Controller\RegistrationController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\RegistrationController" class="App\Controller\RegistrationController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -4915,6 +4948,10 @@
     <service id=".abstract.instanceof.App\Repository\EntraineurRepository" class="App\Repository\EntraineurRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\EquipeRepository" class="App\Repository\EquipeRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\EquipeRepository" class="App\Repository\EquipeRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\FanRepository" class="App\Repository\FanRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\FanRepository" class="App\Repository\FanRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\FanRevenueRepository" class="App\Repository\FanRevenueRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\FanRevenueRepository" class="App\Repository\FanRevenueRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\JoueurRepository" class="App\Repository\JoueurRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\JoueurRepository" class="App\Repository\JoueurRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\KineRepository" class="App\Repository\KineRepository" autowire="true" abstract="true"/>
@@ -5421,7 +5458,52 @@
         <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
       </argument>
     </service>
-    <service id=".service_locator.tRbC8mS" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.ozS3iGU" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
+        <argument key="fanRepository" type="service_closure" id="App\Repository\FanRepository"/>
+        <argument key="serializer" type="service_closure" id="jms_serializer.serializer"/>
+      </argument>
+    </service>
+    <service id=".service_locator.pdykhYj" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="fanRepository" type="service_closure" id="App\Repository\FanRepository"/>
+        <argument key="serializer" type="service_closure" id="jms_serializer.serializer"/>
+      </argument>
+    </service>
+    <service id=".service_locator.sTkNa8s" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="fanRevenueRepository" type="service_closure" id="App\Repository\FanRevenueRepository"/>
+        <argument key="serializer" type="service_closure" id="jms_serializer.serializer"/>
+      </argument>
+    </service>
+    <service id=".service_locator.3e0rPYK" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
+        <argument key="fanRevenueRepository" type="service_closure" id="App\Repository\FanRevenueRepository"/>
+        <argument key="serializer" type="service_closure" id="jms_serializer.serializer"/>
+      </argument>
+    </service>
+    <service id=".service_locator.N2Av8UF" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
+        <argument key="fanRevenueRepository" type="service_closure" id="App\Repository\FanRevenueRepository"/>
+      </argument>
+    </service>
+    <service id=".service_locator.Fmm.APO" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="fanRepository" type="service_closure" id="App\Repository\FanRepository"/>
+        <argument key="fanRevenueRepository" type="service_closure" id="App\Repository\FanRevenueRepository"/>
+        <argument key="serializer" type="service_closure" id="jms_serializer.serializer"/>
+      </argument>
+    </service>
+    <service id=".service_locator.6eT37Cr" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\AdminController::acheterJoueur" type="service_closure" id=".service_locator.cjJGr32"/>
@@ -5468,6 +5550,18 @@
         <argument key="App\Controller\EquipeController::createEquipe" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\EquipeController::getEquipe" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\EquipeController::updatePresident" type="service_closure" id=".service_locator.o6sN0hZ"/>
+        <argument key="App\Controller\FanController::addRevenueToFan" type="service_closure" id=".service_locator.ozS3iGU"/>
+        <argument key="App\Controller\FanController::createFan" type="service_closure" id=".service_locator.ozS3iGU"/>
+        <argument key="App\Controller\FanController::createFanRevenue" type="service_closure" id=".service_locator.ozS3iGU"/>
+        <argument key="App\Controller\FanController::deleteFan" type="service_closure" id=".service_locator.o6sN0hZ"/>
+        <argument key="App\Controller\FanController::deleteFanRevenue" type="service_closure" id=".service_locator.N2Av8UF"/>
+        <argument key="App\Controller\FanController::getAllFanRevenues" type="service_closure" id=".service_locator.sTkNa8s"/>
+        <argument key="App\Controller\FanController::getAllFans" type="service_closure" id=".service_locator.pdykhYj"/>
+        <argument key="App\Controller\FanController::getFanById" type="service_closure" id=".service_locator.pdykhYj"/>
+        <argument key="App\Controller\FanController::getFanRevenue" type="service_closure" id=".service_locator.sTkNa8s"/>
+        <argument key="App\Controller\FanController::getRevenuesByFan" type="service_closure" id=".service_locator.Fmm.APO"/>
+        <argument key="App\Controller\FanController::updateFan" type="service_closure" id=".service_locator.ozS3iGU"/>
+        <argument key="App\Controller\FanController::updateFanRevenue" type="service_closure" id=".service_locator.3e0rPYK"/>
         <argument key="App\Controller\RegistrationController::index" type="service_closure" id=".service_locator.04rvWvA"/>
         <argument key="App\Kernel::loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
@@ -5517,6 +5611,18 @@
         <argument key="App\Controller\EquipeController:createEquipe" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\EquipeController:getEquipe" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\EquipeController:updatePresident" type="service_closure" id=".service_locator.o6sN0hZ"/>
+        <argument key="App\Controller\FanController:addRevenueToFan" type="service_closure" id=".service_locator.ozS3iGU"/>
+        <argument key="App\Controller\FanController:createFan" type="service_closure" id=".service_locator.ozS3iGU"/>
+        <argument key="App\Controller\FanController:createFanRevenue" type="service_closure" id=".service_locator.ozS3iGU"/>
+        <argument key="App\Controller\FanController:deleteFan" type="service_closure" id=".service_locator.o6sN0hZ"/>
+        <argument key="App\Controller\FanController:deleteFanRevenue" type="service_closure" id=".service_locator.N2Av8UF"/>
+        <argument key="App\Controller\FanController:getAllFanRevenues" type="service_closure" id=".service_locator.sTkNa8s"/>
+        <argument key="App\Controller\FanController:getAllFans" type="service_closure" id=".service_locator.pdykhYj"/>
+        <argument key="App\Controller\FanController:getFanById" type="service_closure" id=".service_locator.pdykhYj"/>
+        <argument key="App\Controller\FanController:getFanRevenue" type="service_closure" id=".service_locator.sTkNa8s"/>
+        <argument key="App\Controller\FanController:getRevenuesByFan" type="service_closure" id=".service_locator.Fmm.APO"/>
+        <argument key="App\Controller\FanController:updateFan" type="service_closure" id=".service_locator.ozS3iGU"/>
+        <argument key="App\Controller\FanController:updateFanRevenue" type="service_closure" id=".service_locator.3e0rPYK"/>
         <argument key="App\Controller\RegistrationController:index" type="service_closure" id=".service_locator.04rvWvA"/>
         <argument key="kernel:loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel:registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
@@ -5619,7 +5725,7 @@
         <argument key="App\EventListener\PresidentListener" type="service_closure" id="App\EventListener\PresidentListener"/>
       </argument>
     </service>
-    <service id=".service_locator.Xx.9Hus" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.LBIpy6C" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Repository\ContratEntraineurRepository" type="service_closure" id="App\Repository\ContratEntraineurRepository"/>
@@ -5630,6 +5736,8 @@
         <argument key="App\Repository\ContratPresidentRepository" type="service_closure" id="App\Repository\ContratPresidentRepository"/>
         <argument key="App\Repository\EntraineurRepository" type="service_closure" id="App\Repository\EntraineurRepository"/>
         <argument key="App\Repository\EquipeRepository" type="service_closure" id="App\Repository\EquipeRepository"/>
+        <argument key="App\Repository\FanRepository" type="service_closure" id="App\Repository\FanRepository"/>
+        <argument key="App\Repository\FanRevenueRepository" type="service_closure" id="App\Repository\FanRevenueRepository"/>
         <argument key="App\Repository\JoueurRepository" type="service_closure" id="App\Repository\JoueurRepository"/>
         <argument key="App\Repository\KineRepository" type="service_closure" id="App\Repository\KineRepository"/>
         <argument key="App\Repository\MedecinRepository" type="service_closure" id="App\Repository\MedecinRepository"/>
@@ -5930,6 +6038,12 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.O2p6Lk7" method="withContext"/>
     </service>
+    <service id=".service_locator.O2p6Lk7.App\Controller\FanController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\FanController"/>
+      <argument>App\Controller\FanController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.O2p6Lk7" method="withContext"/>
+    </service>
     <service id=".service_locator.O2p6Lk7.App\Controller\RegistrationController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\RegistrationController"/>
       <argument>App\Controller\RegistrationController</argument>
@@ -6054,6 +6168,7 @@
           <argument>App\Controller\AdminController</argument>
           <argument>App\Controller\DashboardController</argument>
           <argument>App\Controller\EquipeController</argument>
+          <argument>App\Controller\FanController</argument>
           <argument>App\Controller\RegistrationController</argument>
           <argument>Doctrine\Bundle\DoctrineBundle\Controller\ProfilerController</argument>
         </argument>
@@ -7017,7 +7132,7 @@
     <service id="Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface" alias="lexik_jwt_authentication.encoder.lcobucci"/>
     <service id="lexik_jwt_authentication.key_loader" alias="lexik_jwt_authentication.key_loader.raw" public="true"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.w7.f4fT" public="true"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.tRbC8mS"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.6eT37Cr"/>
     <service id="jms_serializer.authorization_checker" alias="security.authorization_checker" public="true"/>
     <service id="fos_rest.serializer" alias="fos_rest.serializer.jms"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
@@ -7030,7 +7145,7 @@
     <service id=".service_locator.dTaHD7m" alias=".service_locator.04rvWvA"/>
     <service id=".service_locator.wXLaEHu" alias=".service_locator.I4Ot7PZ"/>
     <service id=".service_locator.2x8EHXZ" alias=".service_locator.cjJGr32"/>
-    <service id=".service_locator.IC5uzW2" alias=".service_locator.tRbC8mS"/>
+    <service id=".service_locator.w4otjE1" alias=".service_locator.6eT37Cr"/>
     <service id=".service_locator.LMuqDDe" alias=".service_locator.VHsrTPK"/>
     <service id=".service_locator.jUv.zyj" alias=".service_locator.O2p6Lk7"/>
     <service id="event_dispatcher" alias="debug.event_dispatcher" public="true"/>
@@ -7062,6 +7177,12 @@
     <service id=".service_locator.I9zgdhE" alias=".service_locator.aeiw.FA"/>
     <service id=".service_locator.XfZ_Auc" alias=".service_locator.cjJGr32"/>
     <service id=".service_locator.9e2t_lq" alias=".service_locator.CsMkqUa"/>
+    <service id=".service_locator.QPctxPr" alias=".service_locator.ozS3iGU"/>
+    <service id=".service_locator.xvBvVB3" alias=".service_locator.pdykhYj"/>
+    <service id=".service_locator.AKNwnbX" alias=".service_locator.sTkNa8s"/>
+    <service id=".service_locator.PIIra7Z" alias=".service_locator.3e0rPYK"/>
+    <service id=".service_locator.LtKUk_u" alias=".service_locator.N2Av8UF"/>
+    <service id=".service_locator.6dk3UyZ" alias=".service_locator.Fmm.APO"/>
     <service id=".service_locator.jxnIR8C" alias=".service_locator.O2p6Lk7"/>
     <service id=".service_locator.dGUCsbe" alias=".service_locator.oR77BOj"/>
     <service id=".service_locator.ro9MXaF" alias=".service_locator.Oannbdp"/>

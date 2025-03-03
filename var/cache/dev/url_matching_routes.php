@@ -31,83 +31,114 @@ return [
         '/api/equipe/create-equipe' => [[['_route' => 'equipe_create_equipe', '_controller' => 'App\\Controller\\EquipeController::createEquipe'], null, ['POST' => 0], null, false, false, null]],
         '/api/equipe/informations' => [[['_route' => 'equipe_get_equipe', '_controller' => 'App\\Controller\\EquipeController::getEquipe'], null, ['GET' => 0], null, false, false, null]],
         '/api/equipe/update-president' => [[['_route' => 'equipe_update_president', '_controller' => 'App\\Controller\\EquipeController::updatePresident'], null, ['PUT' => 0], null, false, false, null]],
+        '/api/fan/create-fan' => [[['_route' => 'fan_app_fan_createfan', '_controller' => 'App\\Controller\\FanController::createFan'], null, ['POST' => 0], null, false, false, null]],
+        '/api/fan/listfans' => [[['_route' => 'fan_app_fan_getallfans', '_controller' => 'App\\Controller\\FanController::getAllFans'], null, ['GET' => 0], null, false, false, null]],
+        '/api/fan/create-fanrevenue' => [[['_route' => 'fan_app_fan_createfanrevenue', '_controller' => 'App\\Controller\\FanController::createFanRevenue'], null, ['POST' => 0], null, false, false, null]],
+        '/api/fan/listfanrevenues' => [[['_route' => 'fan_app_fan_getallfanrevenues', '_controller' => 'App\\Controller\\FanController::getAllFanRevenues'], null, ['GET' => 0], null, false, false, null]],
         '/api/register' => [[['_route' => 'api_register', '_controller' => 'App\\Controller\\RegistrationController::index'], null, ['POST' => 0], null, false, false, null]],
         '/api/login_check' => [[['_route' => 'api_login_check'], null, null, null, false, false, null]],
     ],
     [ // $regexpList
         0 => '{^(?'
                 .'|/_error/(\\d+)(?:\\.([^/]++))?(*:35)'
-                .'|/api/admin/(?'
-                    .'|update\\-(?'
-                        .'|med(?'
-                            .'|ecin/([^/]++)(*:86)'
-                            .'|ical\\-cost/([^/]++)(*:112)'
-                        .')'
-                        .'|kine/([^/]++)(*:134)'
-                        .'|p(?'
-                            .'|resident/([^/]++)(*:163)'
-                            .'|hotographe/([^/]++)(*:190)'
-                        .')'
-                        .'|entraineur/([^/]++)(*:218)'
-                        .'|joueur/([^/]++)(*:241)'
-                        .'|t(?'
-                            .'|a(?'
-                                .'|lent/([^/]++)(*:270)'
-                                .'|sk/([^/]++)(*:289)'
+                .'|/api/(?'
+                    .'|admin/(?'
+                        .'|update\\-(?'
+                            .'|med(?'
+                                .'|ecin/([^/]++)(*:89)'
+                                .'|ical\\-cost/([^/]++)(*:115)'
                             .')'
-                            .'|rainingsession/([^/]++)(*:321)'
-                        .')'
-                    .')'
-                    .'|de(?'
-                        .'|sactiver\\-contrat\\-(?'
-                            .'|medecin/([^/]++)(*:374)'
-                            .'|entraineur/([^/]++)(*:401)'
-                            .'|joueur/([^/]++)(*:424)'
-                            .'|photographe/([^/]++)(*:452)'
-                        .')'
-                        .'|lete\\-(?'
+                            .'|kine/([^/]++)(*:137)'
+                            .'|p(?'
+                                .'|resident/([^/]++)(*:166)'
+                                .'|hotographe/([^/]++)(*:193)'
+                            .')'
+                            .'|entraineur/([^/]++)(*:221)'
+                            .'|joueur/([^/]++)(*:244)'
                             .'|t(?'
-                                .'|ask/([^/]++)(*:486)'
-                                .'|rainingsession/([^/]++)(*:517)'
+                                .'|a(?'
+                                    .'|lent/([^/]++)(*:273)'
+                                    .'|sk/([^/]++)(*:292)'
+                                .')'
+                                .'|rainingsession/([^/]++)(*:324)'
                             .')'
-                            .'|medical\\-cost/([^/]++)(*:548)'
+                        .')'
+                        .'|de(?'
+                            .'|sactiver\\-contrat\\-(?'
+                                .'|medecin/([^/]++)(*:377)'
+                                .'|entraineur/([^/]++)(*:404)'
+                                .'|joueur/([^/]++)(*:427)'
+                                .'|photographe/([^/]++)(*:455)'
+                            .')'
+                            .'|lete\\-(?'
+                                .'|t(?'
+                                    .'|ask/([^/]++)(*:489)'
+                                    .'|rainingsession/([^/]++)(*:520)'
+                                .')'
+                                .'|medical\\-cost/([^/]++)(*:551)'
+                            .')'
+                        .')'
+                        .'|renouvellement\\-contrat\\-(?'
+                            .'|medecin/([^/]++)(*:605)'
+                            .'|joueur/([^/]++)(*:628)'
+                            .'|photographe/([^/]++)(*:656)'
+                        .')'
+                        .'|acheter\\-joueur/([^/]++)(*:689)'
+                        .'|medical\\-costs/joueur/([^/]++)(*:727)'
+                    .')'
+                    .'|fan/(?'
+                        .'|listfans/([^/]++)(*:760)'
+                        .'|update\\-fan(?'
+                            .'|/([^/]++)(*:791)'
+                            .'|revenue/([^/]++)(*:815)'
+                        .')'
+                        .'|delete\\-fan(?'
+                            .'|/([^/]++)(*:847)'
+                            .'|revenue/([^/]++)(*:871)'
+                        .')'
+                        .'|fan(?'
+                            .'|revenues/([^/]++)(*:903)'
+                            .'|s/([^/]++)/listrevenues(?'
+                                .'|(*:937)'
+                            .')'
                         .')'
                     .')'
-                    .'|renouvellement\\-contrat\\-(?'
-                        .'|medecin/([^/]++)(*:602)'
-                        .'|joueur/([^/]++)(*:625)'
-                        .'|photographe/([^/]++)(*:653)'
-                    .')'
-                    .'|acheter\\-joueur/([^/]++)(*:686)'
-                    .'|medical\\-costs/joueur/([^/]++)(*:724)'
                 .')'
             .')/?$}sDu',
     ],
     [ // $dynamicRoutes
         35 => [[['_route' => '_preview_error', '_controller' => 'error_controller::preview', '_format' => 'html'], ['code', '_format'], null, null, false, true, null]],
-        86 => [[['_route' => 'admin_update_medecin', '_controller' => 'App\\Controller\\AdminController::updateMedecin'], ['id'], ['PUT' => 0], null, false, true, null]],
-        112 => [[['_route' => 'admin_update_medical_cost', '_controller' => 'App\\Controller\\AdminController::updateMedicalCost'], ['id'], ['PUT' => 0], null, false, true, null]],
-        134 => [[['_route' => 'admin_update_kine', '_controller' => 'App\\Controller\\AdminController::updateKine'], ['id'], ['PUT' => 0, 'PATCH' => 1], null, false, true, null]],
-        163 => [[['_route' => 'admin_update_president', '_controller' => 'App\\Controller\\AdminController::updatePresident'], ['id'], ['PUT' => 0, 'PATCH' => 1], null, false, true, null]],
-        190 => [[['_route' => 'admin_update_photographe', '_controller' => 'App\\Controller\\AdminController::updatePhotographe'], ['id'], ['PUT' => 0, 'PATCH' => 1], null, false, true, null]],
-        218 => [[['_route' => 'admin_update_entraineur', '_controller' => 'App\\Controller\\AdminController::updateEntraineur'], ['id'], ['PUT' => 0, 'PATCH' => 1], null, false, true, null]],
-        241 => [[['_route' => 'admin_update_joueur', '_controller' => 'App\\Controller\\AdminController::updateJoueur'], ['id'], ['PUT' => 0, 'PATCH' => 1], null, false, true, null]],
-        270 => [[['_route' => 'admin_update_talent', '_controller' => 'App\\Controller\\AdminController::updateTalent'], ['id'], ['PUT' => 0], null, false, true, null]],
-        289 => [[['_route' => 'admin_update_task', '_controller' => 'App\\Controller\\AdminController::updateTask'], ['id'], ['PUT' => 0], null, false, true, null]],
-        321 => [[['_route' => 'admin_update_trainingsession', '_controller' => 'App\\Controller\\AdminController::updateTrainingSession'], ['id'], ['PUT' => 0], null, false, true, null]],
-        374 => [[['_route' => 'admin_desactiver_contrat_medecin', '_controller' => 'App\\Controller\\AdminController::desactiverContratMedecin'], ['medecin_id'], ['PATCH' => 0], null, false, true, null]],
-        401 => [[['_route' => 'admin_desactiver_contrat_entraineur', '_controller' => 'App\\Controller\\AdminController::desactiverContratEntraineur'], ['entraineur_id'], ['PATCH' => 0], null, false, true, null]],
-        424 => [[['_route' => 'admin_desactiver_contrat_joueur', '_controller' => 'App\\Controller\\AdminController::desactiverContrat'], ['joueur_id'], ['PATCH' => 0], null, false, true, null]],
-        452 => [[['_route' => 'admin_desactiver_contrat_photographe', '_controller' => 'App\\Controller\\AdminController::desactiverContratPhotographe'], ['photographe_id'], ['PATCH' => 0], null, false, true, null]],
-        486 => [[['_route' => 'admin_delete_task', '_controller' => 'App\\Controller\\AdminController::deleteTask'], ['id'], ['DELETE' => 0], null, false, true, null]],
-        517 => [[['_route' => 'admin_delete_training_session', '_controller' => 'App\\Controller\\AdminController::deleteTrainingSession'], ['id'], ['DELETE' => 0], null, false, true, null]],
-        548 => [[['_route' => 'admin_delete_medical_cost', '_controller' => 'App\\Controller\\AdminController::deleteMedicalCost'], ['id'], ['DELETE' => 0], null, false, true, null]],
-        602 => [[['_route' => 'admin_renouvellement_contrat-medecin', '_controller' => 'App\\Controller\\AdminController::createContratMedecin'], ['medecin_id'], ['POST' => 0], null, false, true, null]],
-        625 => [[['_route' => 'admin_renouvellement_contrat-joueur', '_controller' => 'App\\Controller\\AdminController::createContratJoueur'], ['joueur_id'], ['POST' => 0], null, false, true, null]],
-        653 => [[['_route' => 'admin_renouvellement_contrat_photographe', '_controller' => 'App\\Controller\\AdminController::createContratPhotographe'], ['photographe_id'], ['POST' => 0], null, false, true, null]],
-        686 => [[['_route' => 'admin_acheter_joueur', '_controller' => 'App\\Controller\\AdminController::acheterJoueur'], ['id'], ['POST' => 0], null, false, true, null]],
-        724 => [
-            [['_route' => 'admin_get_medical_costs_by_joueur', '_controller' => 'App\\Controller\\AdminController::getMedicalCostsByJoueur'], ['joueurId'], ['GET' => 0], null, false, true, null],
+        89 => [[['_route' => 'admin_update_medecin', '_controller' => 'App\\Controller\\AdminController::updateMedecin'], ['id'], ['PUT' => 0], null, false, true, null]],
+        115 => [[['_route' => 'admin_update_medical_cost', '_controller' => 'App\\Controller\\AdminController::updateMedicalCost'], ['id'], ['PUT' => 0], null, false, true, null]],
+        137 => [[['_route' => 'admin_update_kine', '_controller' => 'App\\Controller\\AdminController::updateKine'], ['id'], ['PUT' => 0, 'PATCH' => 1], null, false, true, null]],
+        166 => [[['_route' => 'admin_update_president', '_controller' => 'App\\Controller\\AdminController::updatePresident'], ['id'], ['PUT' => 0, 'PATCH' => 1], null, false, true, null]],
+        193 => [[['_route' => 'admin_update_photographe', '_controller' => 'App\\Controller\\AdminController::updatePhotographe'], ['id'], ['PUT' => 0, 'PATCH' => 1], null, false, true, null]],
+        221 => [[['_route' => 'admin_update_entraineur', '_controller' => 'App\\Controller\\AdminController::updateEntraineur'], ['id'], ['PUT' => 0, 'PATCH' => 1], null, false, true, null]],
+        244 => [[['_route' => 'admin_update_joueur', '_controller' => 'App\\Controller\\AdminController::updateJoueur'], ['id'], ['PUT' => 0, 'PATCH' => 1], null, false, true, null]],
+        273 => [[['_route' => 'admin_update_talent', '_controller' => 'App\\Controller\\AdminController::updateTalent'], ['id'], ['PUT' => 0], null, false, true, null]],
+        292 => [[['_route' => 'admin_update_task', '_controller' => 'App\\Controller\\AdminController::updateTask'], ['id'], ['PUT' => 0], null, false, true, null]],
+        324 => [[['_route' => 'admin_update_trainingsession', '_controller' => 'App\\Controller\\AdminController::updateTrainingSession'], ['id'], ['PUT' => 0], null, false, true, null]],
+        377 => [[['_route' => 'admin_desactiver_contrat_medecin', '_controller' => 'App\\Controller\\AdminController::desactiverContratMedecin'], ['medecin_id'], ['PATCH' => 0], null, false, true, null]],
+        404 => [[['_route' => 'admin_desactiver_contrat_entraineur', '_controller' => 'App\\Controller\\AdminController::desactiverContratEntraineur'], ['entraineur_id'], ['PATCH' => 0], null, false, true, null]],
+        427 => [[['_route' => 'admin_desactiver_contrat_joueur', '_controller' => 'App\\Controller\\AdminController::desactiverContrat'], ['joueur_id'], ['PATCH' => 0], null, false, true, null]],
+        455 => [[['_route' => 'admin_desactiver_contrat_photographe', '_controller' => 'App\\Controller\\AdminController::desactiverContratPhotographe'], ['photographe_id'], ['PATCH' => 0], null, false, true, null]],
+        489 => [[['_route' => 'admin_delete_task', '_controller' => 'App\\Controller\\AdminController::deleteTask'], ['id'], ['DELETE' => 0], null, false, true, null]],
+        520 => [[['_route' => 'admin_delete_training_session', '_controller' => 'App\\Controller\\AdminController::deleteTrainingSession'], ['id'], ['DELETE' => 0], null, false, true, null]],
+        551 => [[['_route' => 'admin_delete_medical_cost', '_controller' => 'App\\Controller\\AdminController::deleteMedicalCost'], ['id'], ['DELETE' => 0], null, false, true, null]],
+        605 => [[['_route' => 'admin_renouvellement_contrat-medecin', '_controller' => 'App\\Controller\\AdminController::createContratMedecin'], ['medecin_id'], ['POST' => 0], null, false, true, null]],
+        628 => [[['_route' => 'admin_renouvellement_contrat-joueur', '_controller' => 'App\\Controller\\AdminController::createContratJoueur'], ['joueur_id'], ['POST' => 0], null, false, true, null]],
+        656 => [[['_route' => 'admin_renouvellement_contrat_photographe', '_controller' => 'App\\Controller\\AdminController::createContratPhotographe'], ['photographe_id'], ['POST' => 0], null, false, true, null]],
+        689 => [[['_route' => 'admin_acheter_joueur', '_controller' => 'App\\Controller\\AdminController::acheterJoueur'], ['id'], ['POST' => 0], null, false, true, null]],
+        727 => [[['_route' => 'admin_get_medical_costs_by_joueur', '_controller' => 'App\\Controller\\AdminController::getMedicalCostsByJoueur'], ['joueurId'], ['GET' => 0], null, false, true, null]],
+        760 => [[['_route' => 'fan_app_fan_getfanbyid', '_controller' => 'App\\Controller\\FanController::getFanById'], ['id'], ['GET' => 0], null, false, true, null]],
+        791 => [[['_route' => 'fan_app_fan_updatefan', '_controller' => 'App\\Controller\\FanController::updateFan'], ['id'], ['PUT' => 0], null, false, true, null]],
+        815 => [[['_route' => 'fan_app_fan_updatefanrevenue', '_controller' => 'App\\Controller\\FanController::updateFanRevenue'], ['id'], ['PUT' => 0], null, false, true, null]],
+        847 => [[['_route' => 'fan_app_fan_deletefan', '_controller' => 'App\\Controller\\FanController::deleteFan'], ['id'], ['DELETE' => 0], null, false, true, null]],
+        871 => [[['_route' => 'fan_app_fan_deletefanrevenue', '_controller' => 'App\\Controller\\FanController::deleteFanRevenue'], ['id'], ['DELETE' => 0], null, false, true, null]],
+        903 => [[['_route' => 'fan_app_fan_getfanrevenue', '_controller' => 'App\\Controller\\FanController::getFanRevenue'], ['id'], ['GET' => 0], null, false, true, null]],
+        937 => [
+            [['_route' => 'fan_app_fan_getrevenuesbyfan', '_controller' => 'App\\Controller\\FanController::getRevenuesByFan'], ['id'], ['GET' => 0], null, false, false, null],
+            [['_route' => 'fan_app_fan_addrevenuetofan', '_controller' => 'App\\Controller\\FanController::addRevenueToFan'], ['id'], ['POST' => 0], null, false, false, null],
             [null, null, null, null, false, false, 0],
         ],
     ],
