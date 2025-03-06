@@ -716,6 +716,64 @@ class AdminController extends AbstractController
 
     //******************************
 
+    #[Route('/renouvellement-contrat-entraineur/{entraineur_id}', name: 'renouvellement_contrat_entraineur', methods: ['POST'])]
+    public function createContratEntraineur(
+        int $entraineur_id,
+        Request $request,
+        ManagerRegistry $doctrine
+    ): JsonResponse {
+        $em = $doctrine->getManager();
+        $data = json_decode($request->getContent(), true);
+
+        // Récupérer le entraineur par ID
+        $entraineur = $doctrine->getRepository(Entraineur::class)->find($entraineur_id);
+        if (!$entraineur) {
+            return $this->json(['message' => 'Entraineur non trouvé'], 404);
+        }
+
+        // Récupérer l'ancien contrat actif
+        $ancienContrat = $entraineur->getContrats()->filter(function($contrat) {
+            return $contrat->isStatut() === true; // Seules les contrats actifs sont considérés
+        })->first();
+
+        // Vérification si un contrat actif existe
+        if ($ancienContrat) {
+            // Vérifier si la date actuelle est après la date de fin du contrat
+            $currentDate = new \DateTime();
+            $dateFinContrat = $ancienContrat->getDateFinContrat();
+
+            if ($currentDate <= $dateFinContrat) {
+                return $this->json([
+                    'message' => 'Le contrat actuel est encore valide, vous ne pouvez pas renouveler tant qu\'il est en cours.'
+                ], 400);
+            }
+        }
+
+        // Créer un nouveau contrat
+        $nouveauContrat = new ContratEntraineur();
+        $nouveauContrat->setSalaire($data['salaire']);
+        $nouveauContrat->setDateAffectation(new \DateTime($data['date_affectation']));
+        $nouveauContrat->setDateFinContrat(new \DateTime($data['date_fin_contrat']));
+        $nouveauContrat->setStatut(true);  // Le statut est actif par défaut
+        $entraineur->addContrat($nouveauContrat);
+
+        // Sauvegarder le nouveau contrat
+        $em->persist($nouveauContrat);
+        $em->flush();
+
+        return $this->json([
+            'message' => 'Nouveau contrat créé avec succès pour le entraineur',
+            'contrat' => [
+                'salaire' => $nouveauContrat->getSalaire(),
+                'date_affectation' => $nouveauContrat->getDateAffectation()->format('Y-m-d'),
+                'date_fin_contrat' => $nouveauContrat->getDateFinContrat()->format('Y-m-d'),
+                'statut' => $nouveauContrat->isStatut()
+            ]
+        ]);
+    }
+
+    //**********************************
+
     #[Route('/listentraineurs', name: 'listentraineurs', methods: ['GET'])]
     public function listEntraineurs(ManagerRegistry $doctrine): JsonResponse
     {
@@ -1442,73 +1500,49 @@ class AdminController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
 
-           // Vérification des champs obligatoires
-    if (!isset($data['nom']) || empty($data['nom'])){
-        return $this->json(['error' => 'Le nom de task est requis'], 400);
-    }
-
-    if (!isset($data['type']) || empty($data['type'])){
-        return $this->json(['error' => 'Le type de task est requis'], 400);
-    }
-    if (!isset($data['duree']) || empty($data['duree'])){
-        return $this->json(['error' => 'Le duree de task est requis'], 400);
-    }
-
-    $task = new Task();
-    $task->setNom($data['nom']);
-    $task->setType($data['type']);
-    //$task->setDuree($data['duree']);
-    
-
-    if (!empty($data['duree'])) {
-    try {
-        // Vérification du format HH:MM:SS
-        $timeParts = explode(':', $data['duree']);
-        if (count($timeParts) !== 3) {
-            return new JsonResponse(['error' => 'Format de durée invalide, attendu HH:MM:SS'], 400);
+        // Vérification des champs obligatoires
+        if (empty($data['nom']) || empty($data['type']) || empty($data['duree'])) {
+            return $this->json(['error' => 'Tous les champs (nom, type, durée) sont requis'], 400);
         }
 
-        // Création d'un objet DateTime uniquement avec l'heure
-        $date = new \DateTime();
-        $date->setTime((int) $timeParts[0], (int) $timeParts[1], (int) $timeParts[2]);
+        $task = new Task();
+        $task->setNom($data['nom']);
+        $task->setType($data['type']);
 
-        $task->setDuree($date);
-    } catch (\Exception $e) {
-        return new JsonResponse(['error' => 'Format de durée invalide'], 400);
-    }
-    }
-    // Vérification et conversion de la durée
-    if (!empty($data['duree'])) {
+        // Vérification et conversion de la durée
         try {
-            // Vérification du format HH:MM:SS
             $timeParts = explode(':', $data['duree']);
+
             if (count($timeParts) !== 3) {
-                return new JsonResponse(['error' => 'Format de durée invalide, attendu HH:MM:SS'], 400);
+                return $this->json(['error' => 'Format de durée invalide, attendu HH:MM:SS'], 400);
             }
-    
-            // Création d'un objet DateTime uniquement avec l'heure
+
+            [$hours, $minutes, $seconds] = array_map('intval', $timeParts);
+
+            if ($hours < 0 || $minutes < 0 || $minutes >= 60 || $seconds < 0 || $seconds >= 60) {
+                return $this->json(['error' => 'Valeurs invalides pour la durée'], 400);
+            }
+
             $date = new \DateTime();
-            $date->setTime((int) $timeParts[0], (int) $timeParts[1], (int) $timeParts[2]);
-    
+            $date->setTime($hours, $minutes, $seconds);
             $task->setDuree($date);
         } catch (\Exception $e) {
-            return new JsonResponse(['error' => 'Format de durée invalide'], 400);
+            return $this->json(['error' => 'Format de durée invalide'], 400);
         }
-    }
 
-    // Enregistrement dans la base de données
-    $entityManager->persist($task);
-    $entityManager->flush();
+        // Enregistrement dans la base de données
+        $entityManager->persist($task);
+        $entityManager->flush();
 
-    return new JsonResponse([
-        'message' => 'Tâche créée avec succès',
-        'task' => [
-            'id' => $task->getId(),
-            'nom' => $task->getNom(),
-            'type' => $task->getType(),
-            'duree' => $task->getDuree()?->format('H:i:s'),
-        ]
-    ], 201);
+        return $this->json([
+            'message' => 'Tâche créée avec succès',
+            'task' => [
+                'id' => $task->getId(),
+                'nom' => $task->getNom(),
+                'type' => $task->getType(),
+                'duree' => $task->getDuree()->format('H:i:s'),
+            ]
+        ], 201);
     }
 
 
@@ -1648,6 +1682,54 @@ class AdminController extends AbstractController
             ]
         ], 201);
     }
+
+    //-------------------
+
+    #[Route('/training-sessions', name: 'list_training_sessions', methods: ['GET'])]
+    public function listTrainingSessions(ManagerRegistry $doctrine): JsonResponse
+    {
+        $em = $doctrine->getManager();
+        $trainingSessions = $em->getRepository(TrainingSession::class)->findAll();
+
+        $result = [];
+
+        foreach ($trainingSessions as $session) {
+            $sessionData = [
+                'id' => $session->getId(),
+                'date' => $session->getDate()->format('Y-m-d'),
+                'time' => $session->getTime()->format('H:i:s'),
+                'joueurs' => [],
+                'tasks' => []
+            ];
+
+            // Récupérer les joueurs avec leurs noms
+            $joueurs = $em->getRepository(Joueur::class)->findBy(['id' => $session->getJoueurs()]);
+            foreach ($joueurs as $joueur) {
+                $sessionData['joueurs'][] = [
+                    'id' => $joueur->getId(),
+                    'firstname' => $joueur->getFirstname(),
+                    'lastname' => $joueur->getLastname()
+                ];
+            }
+
+            // Récupérer les tâches avec leurs noms et descriptions
+            $tasks = $em->getRepository(Task::class)->findBy(['id' => $session->getTasks()]);
+            foreach ($tasks as $task) {
+                $sessionData['tasks'][] = [
+                    'id' => $task->getId(),
+                    'nom' => $task->getNom(),
+                    'description' => $task->getDescription(),
+                    'duree' => $task->getDuree()
+                ];
+            }
+
+            $result[] = $sessionData;
+        }
+
+        return $this->json($result);
+    }
+
+    //-----------------------
     #[Route('/update-trainingsession/{id}', name: 'update_trainingsession', methods: ['PUT'])]
     public function updateTrainingSession(int $id, Request $request, ManagerRegistry $doctrine): JsonResponse
     {

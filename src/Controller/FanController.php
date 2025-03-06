@@ -207,33 +207,4 @@ class FanController extends AbstractController
         return new JsonResponse($serializer->serialize($revenues, 'json'), JsonResponse::HTTP_OK, [], true);    
     }
 
-    // POST /fans/{id}/listrevenues : Ajouter une revenue à un fan spécifique.
-    #[Route('/fans/{id}/listrevenues', methods: ['POST'])]
-    public function addRevenueToFan(int $id, Request $request, EntityManagerInterface $entityManager, FanRepository $fanRepository, SerializerSerializerInterface $serializer): JsonResponse
-    {
-        $fan = $fanRepository->find($id);
-    if (!$fan) {
-        throw new NotFoundHttpException('Fan non trouvé');
-    }
-
-    $data = json_decode($request->getContent(), true);
-    
-    $fanRevenue = new FanRevenue();
-    $fanRevenue->setRevenueObtenuFan($data['revenue_obtenu_fan']);
-    $fanRevenue->setDateEncaissement(new \DateTime($data['date_encaissement']));
-    $fanRevenue->setFan($fan);
-
-    // Utilisez la méthode addFanRevenue de l'entité Fan pour la relation bidirectionnelle
-    $fan->addFanRevenue($fanRevenue);
-
-    $entityManager->persist($fanRevenue);
-    $entityManager->flush();
-
-    return new JsonResponse(
-        $serializer->serialize($fanRevenue, 'json'), 
-        JsonResponse::HTTP_CREATED, 
-        ['Content-Type' => 'application/json'], 
-        true
-    );
-    }
 }
