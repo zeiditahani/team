@@ -237,6 +237,13 @@
         <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\FanController"/>
       </call>
     </service>
+    <service id="App\Controller\MatchController" class="App\Controller\MatchController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\MatchController"/>
+      </call>
+    </service>
     <service id="App\Controller\RegistrationController" class="App\Controller\RegistrationController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
@@ -304,6 +311,10 @@
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
+    <service id="App\Repository\EquipesAdversairesRepository" class="App\Repository\EquipesAdversairesRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
     <service id="App\Repository\FanRepository" class="App\Repository\FanRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
@@ -317,6 +328,14 @@
       <argument type="service" id="doctrine"/>
     </service>
     <service id="App\Repository\KineRepository" class="App\Repository\KineRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="App\Repository\LogisticRepository" class="App\Repository\LogisticRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="App\Repository\MatchsRepository" class="App\Repository\MatchsRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
@@ -352,6 +371,10 @@
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
+    <service id="App\Repository\TicketRepository" class="App\Repository\TicketRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
     <service id="App\Repository\TrainingsessionRepository" class="App\Repository\TrainingsessionRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
@@ -383,7 +406,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag priority="-50" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator.iNkzz33"/>
+      <argument type="service" id=".service_locator.CuCAdfl"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag priority="-100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">controller.argument_value_resolver</tag>
@@ -1582,7 +1605,7 @@
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator.iNkzz33"/>
+      <argument type="service" id=".service_locator.CuCAdfl"/>
     </service>
     <service id="routing.resolver" class="Symfony\Component\Config\Loader\LoaderResolver">
       <call method="addLoader">
@@ -3274,7 +3297,7 @@
     <service id="doctrine.orm.configuration" class="Doctrine\ORM\Configuration" abstract="true"/>
     <service id="doctrine.orm.entity_manager.abstract" class="Doctrine\ORM\EntityManager" lazy="true" abstract="true"/>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory">
-      <argument type="service" id=".service_locator.0naIFjS"/>
+      <argument type="service" id=".service_locator.QDYqIk9"/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -4070,6 +4093,13 @@
         </argument>
         <argument>null</argument>
       </call>
+      <call method="add">
+        <argument type="service" id=".security.request_matcher.z1gi4_t"/>
+        <argument type="collection">
+          <argument>ROLE_ADMIN</argument>
+        </argument>
+        <argument>null</argument>
+      </call>
     </service>
     <service id="security.context_listener" class="Symfony\Component\Security\Http\Firewall\ContextListener">
       <tag name="monolog.logger" channel="security"/>
@@ -4760,6 +4790,14 @@
         <argument type="service" id=".security.request_matcher.uMe8xOC"/>
       </argument>
     </service>
+    <service id=".security.request_matcher.6HsMKF1" class="Symfony\Component\HttpFoundation\RequestMatcher\PathRequestMatcher">
+      <argument>^/api/match</argument>
+    </service>
+    <service id=".security.request_matcher.z1gi4_t" class="Symfony\Component\HttpFoundation\ChainRequestMatcher">
+      <argument type="collection">
+        <argument type="service" id=".security.request_matcher.6HsMKF1"/>
+      </argument>
+    </service>
     <service id="security.command.user_password_hash" class="Symfony\Component\PasswordHasher\Command\UserPasswordHashCommand">
       <tag name="console.command"/>
       <tag name="container.no_preload"/>
@@ -4949,6 +4987,9 @@
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\FanController" class="App\Controller\FanController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\FanController" class="App\Controller\FanController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\FanController" class="App\Controller\FanController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\MatchController" class="App\Controller\MatchController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\MatchController" class="App\Controller\MatchController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\MatchController" class="App\Controller\MatchController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\RegistrationController" class="App\Controller\RegistrationController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\RegistrationController" class="App\Controller\RegistrationController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\RegistrationController" class="App\Controller\RegistrationController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -4981,6 +5022,8 @@
     <service id=".abstract.instanceof.App\Repository\EntraineurRepository" class="App\Repository\EntraineurRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\EquipeRepository" class="App\Repository\EquipeRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\EquipeRepository" class="App\Repository\EquipeRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\EquipesAdversairesRepository" class="App\Repository\EquipesAdversairesRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\EquipesAdversairesRepository" class="App\Repository\EquipesAdversairesRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\FanRepository" class="App\Repository\FanRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\FanRepository" class="App\Repository\FanRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\FanRevenueRepository" class="App\Repository\FanRevenueRepository" autowire="true" abstract="true"/>
@@ -4989,6 +5032,10 @@
     <service id=".abstract.instanceof.App\Repository\JoueurRepository" class="App\Repository\JoueurRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\KineRepository" class="App\Repository\KineRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\KineRepository" class="App\Repository\KineRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\LogisticRepository" class="App\Repository\LogisticRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\LogisticRepository" class="App\Repository\LogisticRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\MatchsRepository" class="App\Repository\MatchsRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\MatchsRepository" class="App\Repository\MatchsRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\MedecinRepository" class="App\Repository\MedecinRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\MedecinRepository" class="App\Repository\MedecinRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\MedicalCostRepository" class="App\Repository\MedicalCostRepository" autowire="true" abstract="true"/>
@@ -5005,6 +5052,8 @@
     <service id=".abstract.instanceof.App\Repository\TalentDataBaseRepository" class="App\Repository\TalentDataBaseRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\TaskRepository" class="App\Repository\TaskRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\TaskRepository" class="App\Repository\TaskRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\TicketRepository" class="App\Repository\TicketRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\TicketRepository" class="App\Repository\TicketRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\TrainingsessionRepository" class="App\Repository\TrainingsessionRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\TrainingsessionRepository" class="App\Repository\TrainingsessionRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\UserRepository" class="App\Repository\UserRepository" autowire="true" abstract="true"/>
@@ -5540,7 +5589,7 @@
         <argument key="serializer" type="service_closure" id="jms_serializer.serializer"/>
       </argument>
     </service>
-    <service id=".service_locator.iNkzz33" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.CuCAdfl" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\AdminController::acheterJoueur" type="service_closure" id=".service_locator.cjJGr32"/>
@@ -5600,6 +5649,15 @@
         <argument key="App\Controller\FanController::getRevenuesByFan" type="service_closure" id=".service_locator.Fmm.APO"/>
         <argument key="App\Controller\FanController::updateFan" type="service_closure" id=".service_locator.ozS3iGU"/>
         <argument key="App\Controller\FanController::updateFanRevenue" type="service_closure" id=".service_locator.3e0rPYK"/>
+        <argument key="App\Controller\MatchController::acheterTicket" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\MatchController::createLogistic" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\MatchController::createMatch" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\MatchController::deleteMatch" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\MatchController::getEquipesAdversesList" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\MatchController::getJoueursByMatch" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\MatchController::getLogisticsByMatch" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\MatchController::getMatch" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\MatchController::listMatches" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\RegistrationController::index" type="service_closure" id=".service_locator.04rvWvA"/>
         <argument key="App\Controller\SponsorController::addSponsorRevenue" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\SponsorController::createSponsor" type="service_closure" id=".service_locator.CsMkqUa"/>
@@ -5666,6 +5724,15 @@
         <argument key="App\Controller\FanController:getRevenuesByFan" type="service_closure" id=".service_locator.Fmm.APO"/>
         <argument key="App\Controller\FanController:updateFan" type="service_closure" id=".service_locator.ozS3iGU"/>
         <argument key="App\Controller\FanController:updateFanRevenue" type="service_closure" id=".service_locator.3e0rPYK"/>
+        <argument key="App\Controller\MatchController:acheterTicket" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\MatchController:createLogistic" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\MatchController:createMatch" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\MatchController:deleteMatch" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\MatchController:getEquipesAdversesList" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\MatchController:getJoueursByMatch" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\MatchController:getLogisticsByMatch" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\MatchController:getMatch" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\MatchController:listMatches" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\RegistrationController:index" type="service_closure" id=".service_locator.04rvWvA"/>
         <argument key="App\Controller\SponsorController:addSponsorRevenue" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\SponsorController:createSponsor" type="service_closure" id=".service_locator.CsMkqUa"/>
@@ -5772,7 +5839,7 @@
         <argument key="App\EventListener\PresidentListener" type="service_closure" id="App\EventListener\PresidentListener"/>
       </argument>
     </service>
-    <service id=".service_locator.0naIFjS" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.QDYqIk9" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Repository\ContratEntraineurRepository" type="service_closure" id="App\Repository\ContratEntraineurRepository"/>
@@ -5783,10 +5850,13 @@
         <argument key="App\Repository\ContratPresidentRepository" type="service_closure" id="App\Repository\ContratPresidentRepository"/>
         <argument key="App\Repository\EntraineurRepository" type="service_closure" id="App\Repository\EntraineurRepository"/>
         <argument key="App\Repository\EquipeRepository" type="service_closure" id="App\Repository\EquipeRepository"/>
+        <argument key="App\Repository\EquipesAdversairesRepository" type="service_closure" id="App\Repository\EquipesAdversairesRepository"/>
         <argument key="App\Repository\FanRepository" type="service_closure" id="App\Repository\FanRepository"/>
         <argument key="App\Repository\FanRevenueRepository" type="service_closure" id="App\Repository\FanRevenueRepository"/>
         <argument key="App\Repository\JoueurRepository" type="service_closure" id="App\Repository\JoueurRepository"/>
         <argument key="App\Repository\KineRepository" type="service_closure" id="App\Repository\KineRepository"/>
+        <argument key="App\Repository\LogisticRepository" type="service_closure" id="App\Repository\LogisticRepository"/>
+        <argument key="App\Repository\MatchsRepository" type="service_closure" id="App\Repository\MatchsRepository"/>
         <argument key="App\Repository\MedecinRepository" type="service_closure" id="App\Repository\MedecinRepository"/>
         <argument key="App\Repository\MedicalCostRepository" type="service_closure" id="App\Repository\MedicalCostRepository"/>
         <argument key="App\Repository\PhotographeRepository" type="service_closure" id="App\Repository\PhotographeRepository"/>
@@ -5795,6 +5865,7 @@
         <argument key="App\Repository\SponsorRevenueRepository" type="service_closure" id="App\Repository\SponsorRevenueRepository"/>
         <argument key="App\Repository\TalentDataBaseRepository" type="service_closure" id="App\Repository\TalentDataBaseRepository"/>
         <argument key="App\Repository\TaskRepository" type="service_closure" id="App\Repository\TaskRepository"/>
+        <argument key="App\Repository\TicketRepository" type="service_closure" id="App\Repository\TicketRepository"/>
         <argument key="App\Repository\TrainingsessionRepository" type="service_closure" id="App\Repository\TrainingsessionRepository"/>
         <argument key="App\Repository\UserRepository" type="service_closure" id="App\Repository\UserRepository"/>
       </argument>
@@ -6093,6 +6164,12 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.O2p6Lk7" method="withContext"/>
     </service>
+    <service id=".service_locator.O2p6Lk7.App\Controller\MatchController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\MatchController"/>
+      <argument>App\Controller\MatchController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.O2p6Lk7" method="withContext"/>
+    </service>
     <service id=".service_locator.O2p6Lk7.App\Controller\RegistrationController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\RegistrationController"/>
       <argument>App\Controller\RegistrationController</argument>
@@ -6224,6 +6301,7 @@
           <argument>App\Controller\DashboardController</argument>
           <argument>App\Controller\EquipeController</argument>
           <argument>App\Controller\FanController</argument>
+          <argument>App\Controller\MatchController</argument>
           <argument>App\Controller\RegistrationController</argument>
           <argument>App\Controller\SponsorController</argument>
           <argument>Doctrine\Bundle\DoctrineBundle\Controller\ProfilerController</argument>
@@ -7188,7 +7266,7 @@
     <service id="Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface" alias="lexik_jwt_authentication.encoder.lcobucci"/>
     <service id="lexik_jwt_authentication.key_loader" alias="lexik_jwt_authentication.key_loader.raw" public="true"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.w7.f4fT" public="true"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.iNkzz33"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.CuCAdfl"/>
     <service id="jms_serializer.authorization_checker" alias="security.authorization_checker" public="true"/>
     <service id="fos_rest.serializer" alias="fos_rest.serializer.jms"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
@@ -7201,7 +7279,7 @@
     <service id=".service_locator.dTaHD7m" alias=".service_locator.04rvWvA"/>
     <service id=".service_locator.wXLaEHu" alias=".service_locator.I4Ot7PZ"/>
     <service id=".service_locator.2x8EHXZ" alias=".service_locator.cjJGr32"/>
-    <service id=".service_locator.XopFPgK" alias=".service_locator.iNkzz33"/>
+    <service id=".service_locator.bKugtJy" alias=".service_locator.CuCAdfl"/>
     <service id=".service_locator.LMuqDDe" alias=".service_locator.VHsrTPK"/>
     <service id=".service_locator.jUv.zyj" alias=".service_locator.O2p6Lk7"/>
     <service id="event_dispatcher" alias="debug.event_dispatcher" public="true"/>

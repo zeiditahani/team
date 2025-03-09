@@ -55,11 +55,14 @@ class Joueur
     #[ORM\ManyToOne(inversedBy: 'joueurs')]
     private ?Equipe $equipe = null;
     
+    #[ORM\ManyToMany(targetEntity: Matchs::class, mappedBy: "joueurs")]
+    private Collection $matchs;
 
     public function __construct()
     {
         $this->contrats = new ArrayCollection();
         $this->medicalCosts = new ArrayCollection();
+        $this->matchs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -238,6 +241,28 @@ class Joueur
             }
         }
 
+        return $this;
+    }
+
+    public function getMatchs(): Collection
+    {
+        return $this->matchs;
+    }
+
+    public function addMatch(Matchs $match): self
+    {
+        if (!$this->matchs->contains($match)) {
+            $this->matchs->add($match);
+            $match->addJoueur($this);
+        }
+        return $this;
+    }
+
+    public function removeMatch(Matchs $match): self
+    {
+        if ($this->matchs->removeElement($match)) {
+            $match->removeJoueur($this);
+        }
         return $this;
     }
 }

@@ -41,5 +41,6 @@ security:
         - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/fan, roles: ROLE_ADMIN }
         - { path: ^/api/sponsor, roles: ROLE_ADMIN }
+        - { path: ^/api/match, roles: ROLE_ADMIN }
     
     
