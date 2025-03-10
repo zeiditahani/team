@@ -63,6 +63,9 @@ class Joueur
         $this->contrats = new ArrayCollection();
         $this->medicalCosts = new ArrayCollection();
         $this->matchs = new ArrayCollection();
+
+        $this->nb_carton_jaune = 0; // Initialisation à 0
+        $this->nb_carton_rouge = 0; // Initialisation à 0
     }
 
     public function getId(): ?int

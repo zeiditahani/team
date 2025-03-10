@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
   <parameters>
-    <parameter key="kernel.project_dir">C:\Users\PC\Desktop\PFE\team_v3</parameter>
+    <parameter key="kernel.project_dir">/home/tahani/Bureau/PFE/team_v3</parameter>
     <parameter key="kernel.environment">dev</parameter>
     <parameter key="kernel.runtime_environment">%env(default:kernel.environment:APP_RUNTIME_ENV)%</parameter>
     <parameter key="kernel.runtime_mode">%env(query_string:default:container.runtime_mode:APP_RUNTIME_MODE)%</parameter>
@@ -9,9 +9,9 @@
     <parameter key="kernel.runtime_mode.cli">%env(not:default:kernel.runtime_mode.web:)%</parameter>
     <parameter key="kernel.runtime_mode.worker">%env(bool:default::key:worker:default:kernel.runtime_mode:)%</parameter>
     <parameter key="kernel.debug">true</parameter>
-    <parameter key="kernel.build_dir">C:\Users\PC\Desktop\PFE\team_v3\var\cache\dev</parameter>
-    <parameter key="kernel.cache_dir">C:\Users\PC\Desktop\PFE\team_v3\var\cache\dev</parameter>
-    <parameter key="kernel.logs_dir">C:\Users\PC\Desktop\PFE\team_v3\var\log</parameter>
+    <parameter key="kernel.build_dir">/home/tahani/Bureau/PFE/team_v3/var/cache/dev</parameter>
+    <parameter key="kernel.cache_dir">/home/tahani/Bureau/PFE/team_v3/var/cache/dev</parameter>
+    <parameter key="kernel.logs_dir">/home/tahani/Bureau/PFE/team_v3/var/log</parameter>
     <parameter key="kernel.bundles" type="collection">
       <parameter key="FrameworkBundle">Symfony\Bundle\FrameworkBundle\FrameworkBundle</parameter>
       <parameter key="JMSSerializerBundle">JMS\SerializerBundle\JMSSerializerBundle</parameter>
@@ -24,35 +24,35 @@
     </parameter>
     <parameter key="kernel.bundles_metadata" type="collection">
       <parameter key="FrameworkBundle" type="collection">
-        <parameter key="path">C:\Users\PC\Desktop\PFE\team_v3\vendor\symfony\framework-bundle</parameter>
+        <parameter key="path">/home/tahani/Bureau/PFE/team_v3/vendor/symfony/framework-bundle</parameter>
         <parameter key="namespace">Symfony\Bundle\FrameworkBundle</parameter>
       </parameter>
       <parameter key="JMSSerializerBundle" type="collection">
-        <parameter key="path">C:\Users\PC\Desktop\PFE\team_v3\vendor\jms\serializer-bundle</parameter>
+        <parameter key="path">/home/tahani/Bureau/PFE/team_v3/vendor/jms/serializer-bundle</parameter>
         <parameter key="namespace">JMS\SerializerBundle</parameter>
       </parameter>
       <parameter key="FOSRestBundle" type="collection">
-        <parameter key="path">C:\Users\PC\Desktop\PFE\team_v3\vendor\friendsofsymfony\rest-bundle</parameter>
+        <parameter key="path">/home/tahani/Bureau/PFE/team_v3/vendor/friendsofsymfony/rest-bundle</parameter>
         <parameter key="namespace">FOS\RestBundle</parameter>
       </parameter>
       <parameter key="MakerBundle" type="collection">
-        <parameter key="path">C:\Users\PC\Desktop\PFE\team_v3\vendor\symfony\maker-bundle</parameter>
+        <parameter key="path">/home/tahani/Bureau/PFE/team_v3/vendor/symfony/maker-bundle</parameter>
         <parameter key="namespace">Symfony\Bundle\MakerBundle</parameter>
       </parameter>
       <parameter key="DoctrineBundle" type="collection">
-        <parameter key="path">C:\Users\PC\Desktop\PFE\team_v3\vendor\doctrine\doctrine-bundle</parameter>
+        <parameter key="path">/home/tahani/Bureau/PFE/team_v3/vendor/doctrine/doctrine-bundle</parameter>
         <parameter key="namespace">Doctrine\Bundle\DoctrineBundle</parameter>
       </parameter>
       <parameter key="DoctrineMigrationsBundle" type="collection">
-        <parameter key="path">C:\Users\PC\Desktop\PFE\team_v3\vendor\doctrine\doctrine-migrations-bundle</parameter>
+        <parameter key="path">/home/tahani/Bureau/PFE/team_v3/vendor/doctrine/doctrine-migrations-bundle</parameter>
         <parameter key="namespace">Doctrine\Bundle\MigrationsBundle</parameter>
       </parameter>
       <parameter key="SecurityBundle" type="collection">
-        <parameter key="path">C:\Users\PC\Desktop\PFE\team_v3\vendor\symfony\security-bundle</parameter>
+        <parameter key="path">/home/tahani/Bureau/PFE/team_v3/vendor/symfony/security-bundle</parameter>
         <parameter key="namespace">Symfony\Bundle\SecurityBundle</parameter>
       </parameter>
       <parameter key="LexikJWTAuthenticationBundle" type="collection">
-        <parameter key="path">C:\Users\PC\Desktop\PFE\team_v3\vendor\lexik\jwt-authentication-bundle</parameter>
+        <parameter key="path">/home/tahani/Bureau/PFE/team_v3/vendor/lexik/jwt-authentication-bundle</parameter>
         <parameter key="namespace">Lexik\Bundle\JWTAuthenticationBundle</parameter>
       </parameter>
     </parameter>
@@ -86,15 +86,15 @@
     <parameter key="kernel.error_controller">error_controller</parameter>
     <parameter key="debug.file_link_format">%env(default::SYMFONY_IDE)%</parameter>
     <parameter key="debug.error_handler.throw_at">-1</parameter>
-    <parameter key="debug.container.dump">C:\Users\PC\Desktop\PFE\team_v3\var\cache\dev/App_KernelDevDebugContainer.xml</parameter>
+    <parameter key="debug.container.dump">/home/tahani/Bureau/PFE/team_v3/var/cache/dev/App_KernelDevDebugContainer.xml</parameter>
     <parameter key="router.request_context.host">localhost</parameter>
     <parameter key="router.request_context.scheme">http</parameter>
     <parameter key="router.request_context.base_url"></parameter>
     <parameter key="router.resource">kernel::loadRoutes</parameter>
-    <parameter key="router.cache_dir">C:\Users\PC\Desktop\PFE\team_v3\var\cache\dev</parameter>
+    <parameter key="router.cache_dir">/home/tahani/Bureau/PFE/team_v3/var/cache/dev</parameter>
     <parameter key="request_listener.http_port">80</parameter>
     <parameter key="request_listener.https_port">443</parameter>
-    <parameter key="cache.prefix.seed">_C:\Users\PC\Desktop\PFE\team_v3.App_KernelDevDebugContainer</parameter>
+    <parameter key="cache.prefix.seed">_/home/tahani/Bureau/PFE/team_v3.App_KernelDevDebugContainer</parameter>
     <parameter key="session.metadata.storage_key">_sf2_meta</parameter>
     <parameter key="session.storage.options" type="collection">
       <parameter key="cache_limiter" type="string">0</parameter>
@@ -173,7 +173,7 @@
     <parameter key="doctrine.orm.second_level_cache.regions_configuration.class">Doctrine\ORM\Cache\RegionsConfiguration</parameter>
     <parameter key="doctrine.orm.auto_generate_proxy_classes">true</parameter>
     <parameter key="doctrine.orm.enable_lazy_ghost_objects">true</parameter>
-    <parameter key="doctrine.orm.proxy_dir">C:\Users\PC\Desktop\PFE\team_v3\var\cache\dev/doctrine/orm/Proxies</parameter>
+    <parameter key="doctrine.orm.proxy_dir">/home/tahani/Bureau/PFE/team_v3/var/cache/dev/doctrine/orm/Proxies</parameter>
     <parameter key="doctrine.orm.proxy_namespace">Proxies</parameter>
     <parameter key="doctrine.migrations.preferred_em">null</parameter>
     <parameter key="doctrine.migrations.preferred_connection">null</parameter>
@@ -214,6 +214,13 @@
       <tag name="container.service_subscriber"/>
       <call method="setContainer">
         <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\AdminController"/>
+      </call>
+    </service>
+    <service id="App\Controller\AnalysesController" class="App\Controller\AnalysesController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\AnalysesController"/>
       </call>
     </service>
     <service id="App\Controller\DashboardController" class="App\Controller\DashboardController" public="true" autowire="true" autoconfigure="true">
@@ -278,6 +285,10 @@
       <tag name="doctrine.orm.entity_listener" event="postLoad"/>
       <tag name="doctrine.orm.entity_listener" event="postLoad" method="" lazy="" entity_manager="" entity="App\Entity\President" priority=""/>
       <argument type="service" id="doctrine.orm.default_entity_manager"/>
+    </service>
+    <service id="App\Repository\AnalysesRepository" class="App\Repository\AnalysesRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
     </service>
     <service id="App\Repository\ContratEntraineurRepository" class="App\Repository\ContratEntraineurRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
@@ -406,7 +417,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag priority="-50" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator.CuCAdfl"/>
+      <argument type="service" id=".service_locator.x.U739U"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag priority="-100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">controller.argument_value_resolver</tag>
@@ -489,7 +500,7 @@
       </argument>
     </service>
     <service id="http_cache.store" class="Symfony\Component\HttpKernel\HttpCache\Store">
-      <argument>C:\Users\PC\Desktop\PFE\team_v3\var\cache\dev/http_cache</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3/var/cache/dev/http_cache</argument>
     </service>
     <service id="url_helper" class="Symfony\Component\HttpFoundation\UrlHelper">
       <argument type="service" id="request_stack"/>
@@ -499,7 +510,7 @@
       <tag name="container.no_preload"/>
       <argument type="tagged_iterator" tag="kernel.cache_warmer"/>
       <argument>true</argument>
-      <argument>C:\Users\PC\Desktop\PFE\team_v3\var\cache\dev/App_KernelDevDebugContainerDeprecations.log</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3/var/cache/dev/App_KernelDevDebugContainerDeprecations.log</argument>
     </service>
     <service id="cache_clearer" class="Symfony\Component\HttpKernel\CacheClearer\ChainCacheClearer">
       <argument type="tagged_iterator" tag="kernel.cache_clearer"/>
@@ -695,7 +706,7 @@
       </argument>
       <argument>UTF-8</argument>
       <argument type="service" id="debug.file_link_formatter" on-invalid="null"/>
-      <argument>C:\Users\PC\Desktop\PFE\team_v3</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3</argument>
       <argument type="service">
         <service>
           <argument type="service" id="request_stack"/>
@@ -731,7 +742,7 @@
       <tag name="console.command"/>
       <tag name="container.no_preload"/>
       <argument type="service" id="filesystem"/>
-      <argument>C:\Users\PC\Desktop\PFE\team_v3</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3</argument>
       <call method="setName">
         <argument>assets:install</argument>
       </call>
@@ -908,7 +919,7 @@
       <tag name="console.command"/>
       <tag name="container.no_preload"/>
       <argument>dev</argument>
-      <argument>C:\Users\PC\Desktop\PFE\team_v3</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3</argument>
       <call method="setName">
         <argument>debug:dotenv</argument>
       </call>
@@ -1046,9 +1057,9 @@
     <service id="cache.app" class="Symfony\Component\Cache\Adapter\FilesystemAdapter" public="true">
       <tag name="cache.pool"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>ym9BeyKqfi</argument>
+      <argument>+4WY690KPC</argument>
       <argument>0</argument>
-      <argument>C:\Users\PC\Desktop\PFE\team_v3\var\cache\dev/pools/app</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3/var/cache/dev/pools/app</argument>
       <argument type="service" id="cache.default_marshaller" on-invalid="ignore"/>
       <call method="setLogger">
         <argument type="service" id="logger" on-invalid="ignore"/>
@@ -1061,50 +1072,50 @@
     <service id="cache.system" class="Symfony\Component\Cache\Adapter\AdapterInterface" public="true">
       <tag name="cache.pool"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>ZPVFKEz70q</argument>
+      <argument>uO4WS433Eu</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:\Users\PC\Desktop\PFE\team_v3\var\cache\dev/pools/system</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
     <service id="cache.validator" class="Symfony\Component\Cache\Adapter\AdapterInterface">
       <tag name="cache.pool"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>UaKkaAyLFy</argument>
+      <argument>mmMyjd9Zum</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:\Users\PC\Desktop\PFE\team_v3\var\cache\dev/pools/system</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
     <service id="cache.serializer" class="Symfony\Component\Cache\Adapter\AdapterInterface">
       <tag name="cache.pool"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>bpL-3SaHKN</argument>
+      <argument>aHRFgKhvrv</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:\Users\PC\Desktop\PFE\team_v3\var\cache\dev/pools/system</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
     <service id="cache.annotations" class="Symfony\Component\Cache\Adapter\AdapterInterface">
       <tag name="cache.pool"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>fQvJv-um+2</argument>
+      <argument>R2BwZwzhc3</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:\Users\PC\Desktop\PFE\team_v3\var\cache\dev/pools/system</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
     <service id="cache.property_info" class="Symfony\Component\Cache\Adapter\AdapterInterface">
       <tag name="cache.pool"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>LvYmYnlNAe</argument>
+      <argument>KxKhIjgESk</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:\Users\PC\Desktop\PFE\team_v3\var\cache\dev/pools/system</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -1114,7 +1125,7 @@
       <argument></argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:\Users\PC\Desktop\PFE\team_v3\var\cache\dev/pools/system</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -1133,7 +1144,7 @@
       <tag name="monolog.logger" channel="cache"/>
       <argument></argument>
       <argument>0</argument>
-      <argument>C:\Users\PC\Desktop\PFE\team_v3\var\cache\dev/pools/app</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3/var/cache/dev/pools/app</argument>
       <argument type="service" id="cache.default_marshaller" on-invalid="ignore"/>
       <call method="setLogger">
         <argument type="service" id="logger" on-invalid="ignore"/>
@@ -1605,7 +1616,7 @@
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator.CuCAdfl"/>
+      <argument type="service" id=".service_locator.x.U739U"/>
     </service>
     <service id="routing.resolver" class="Symfony\Component\Config\Loader\LoaderResolver">
       <call method="addLoader">
@@ -1700,7 +1711,7 @@
       <argument type="service" id=".service_locator.PvoQzFT.router.default"/>
       <argument>kernel::loadRoutes</argument>
       <argument type="collection">
-        <argument key="cache_dir">C:\Users\PC\Desktop\PFE\team_v3\var\cache\dev</argument>
+        <argument key="cache_dir">/home/tahani/Bureau/PFE/team_v3/var/cache/dev</argument>
         <argument key="debug">true</argument>
         <argument key="generator_class">Symfony\Component\Routing\Generator\CompiledUrlGenerator</argument>
         <argument key="generator_dumper_class">Symfony\Component\Routing\Generator\Dumper\CompiledUrlGeneratorDumper</argument>
@@ -1738,7 +1749,7 @@
       <argument type="service" id="request_stack"/>
       <argument type="service" id="router.request_context" on-invalid="ignore"/>
       <argument type="service" id="logger" on-invalid="ignore"/>
-      <argument>C:\Users\PC\Desktop\PFE\team_v3</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3</argument>
       <argument>true</argument>
     </service>
     <service id="Symfony\Bundle\FrameworkBundle\Controller\RedirectController" class="Symfony\Bundle\FrameworkBundle\Controller\RedirectController" public="true">
@@ -1766,7 +1777,7 @@
     </service>
     <service id="secrets.vault" class="Symfony\Bundle\FrameworkBundle\Secrets\SodiumVault">
       <tag name="container.env_var_loader"/>
-      <argument>C:\Users\PC\Desktop\PFE\team_v3/config/secrets/%env(default:kernel.environment:APP_RUNTIME_ENV)%</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3/config/secrets/%env(default:kernel.environment:APP_RUNTIME_ENV)%</argument>
       <argument type="service" id="secrets.decryption_key" on-invalid="ignore"/>
     </service>
     <service id="secrets.decryption_key" class="Symfony\Component\String\LazyString" constructor="fromCallable">
@@ -1774,7 +1785,7 @@
       <argument>base64:default::SYMFONY_DECRYPTION_SECRET</argument>
     </service>
     <service id="secrets.local_vault" class="Symfony\Bundle\FrameworkBundle\Secrets\DotenvVault">
-      <argument>C:\Users\PC\Desktop\PFE\team_v3/.env.dev.local</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3/.env.dev.local</argument>
     </service>
     <service id="property_info" class="Symfony\Component\PropertyInfo\PropertyInfoExtractor">
       <argument type="iterator">
@@ -1846,7 +1857,7 @@
       <argument>true</argument>
     </service>
     <service id="session.storage.factory.mock_file" class="Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorageFactory">
-      <argument>C:\Users\PC\Desktop\PFE\team_v3\var\cache\dev/sessions</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3/var/cache/dev/sessions</argument>
       <argument>MOCKSESSID</argument>
       <argument type="service">
         <service class="Symfony\Component\HttpFoundation\Session\Storage\MetadataBag">
@@ -2069,7 +2080,7 @@
       <tag name="jms_serializer.subscribing_handler"/>
       <tag name="default">jms_serializer.instance</tag>
       <argument>Y-m-d\TH:i:sP</argument>
-      <argument>UTC</argument>
+      <argument>Europe/Berlin</argument>
       <argument>true</argument>
       <argument type="collection">
         <argument>Y-m-d\TH:i:sP</argument>
@@ -2132,7 +2143,7 @@
     </service>
     <service id="jms_serializer.metadata.cache.file_cache" class="Metadata\Cache\FileCache">
       <tag name="default">jms_serializer.instance</tag>
-      <argument>C:\Users\PC\Desktop\PFE\team_v3\var\cache\dev/jms_serializer_default</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3/var/cache/dev/jms_serializer_default</argument>
     </service>
     <service id="jms_serializer.version_exclusion_strategy" class="JMS\Serializer\Exclusion\VersionExclusionStrategy" abstract="true">
       <tag name="default">jms_serializer.instance</tag>
@@ -2907,7 +2918,7 @@
       <argument type="service" id="filesystem"/>
       <argument type="service" id="maker.autoloader_util"/>
       <argument type="service" id="maker.file_link_formatter"/>
-      <argument>C:\Users\PC\Desktop\PFE\team_v3</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3</argument>
       <argument>null</argument>
     </service>
     <service id="maker.autoloader_finder" class="Symfony\Bundle\MakerBundle\Util\ComposerAutoloaderFinder">
@@ -3085,7 +3096,7 @@
     </service>
     <service id="maker.maker.make_migration" class="Symfony\Bundle\MakerBundle\Maker\MakeMigration">
       <tag name="maker.command"/>
-      <argument>C:\Users\PC\Desktop\PFE\team_v3</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3</argument>
       <argument type="service" id="maker.file_link_formatter"/>
     </service>
     <service id="maker.maker.make_stimulus_controller" class="Symfony\Bundle\MakerBundle\Maker\MakeStimulusController">
@@ -3279,7 +3290,7 @@
       <argument type="service" id="doctrine.debug_data_holder"/>
       <argument type="service" id="debug.stopwatch" on-invalid="null"/>
     </service>
-    <service id=".1_ServiceLocator~iUg0s_6" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".1_ServiceLocator~yTfpep1" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <argument type="collection"/>
     </service>
     <service id="doctrine.orm.proxy_cache_warmer" class="Symfony\Bridge\Doctrine\CacheWarmer\ProxyCacheWarmer">
@@ -3297,7 +3308,7 @@
     <service id="doctrine.orm.configuration" class="Doctrine\ORM\Configuration" abstract="true"/>
     <service id="doctrine.orm.entity_manager.abstract" class="Doctrine\ORM\EntityManager" lazy="true" abstract="true"/>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory">
-      <argument type="service" id=".service_locator.QDYqIk9"/>
+      <argument type="service" id=".service_locator.RcAEws0"/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -3472,7 +3483,7 @@
         <argument type="service" id=".doctrine.orm.default_metadata_driver"/>
       </call>
       <call method="setProxyDir">
-        <argument>C:\Users\PC\Desktop\PFE\team_v3\var\cache\dev/doctrine/orm/Proxies</argument>
+        <argument>/home/tahani/Bureau/PFE/team_v3/var/cache/dev/doctrine/orm/Proxies</argument>
       </call>
       <call method="setProxyNamespace">
         <argument>Proxies</argument>
@@ -3513,7 +3524,7 @@
     </service>
     <service id="doctrine.orm.default_attribute_metadata_driver" class="Doctrine\ORM\Mapping\Driver\AttributeDriver">
       <argument type="collection">
-        <argument>C:\Users\PC\Desktop\PFE\team_v3\src\Entity</argument>
+        <argument>/home/tahani/Bureau/PFE/team_v3/src/Entity</argument>
       </argument>
       <argument>true</argument>
     </service>
@@ -3635,7 +3646,7 @@
     <service id="doctrine.migrations.configuration" class="Doctrine\Migrations\Configuration\Configuration">
       <call method="addMigrationsDirectory">
         <argument>DoctrineMigrations</argument>
-        <argument>C:\Users\PC\Desktop\PFE\team_v3/migrations</argument>
+        <argument>/home/tahani/Bureau/PFE/team_v3/migrations</argument>
       </call>
       <call method="setAllOrNothing">
         <argument>false</argument>
@@ -3959,10 +3970,10 @@
     <service id="cache.security_expression_language" class="Symfony\Component\Cache\Adapter\AdapterInterface">
       <tag name="cache.pool"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>9LMkT33vWU</argument>
+      <argument>eFPCLYkqSl</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:\Users\PC\Desktop\PFE\team_v3\var\cache\dev/pools/system</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -3975,10 +3986,10 @@
     <service id="cache.security_is_granted_attribute_expression_language" class="Symfony\Component\Cache\Adapter\AdapterInterface" public="true">
       <tag name="cache.pool"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>Trii4nkjcw</argument>
+      <argument>NzlDEO6od5</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:\Users\PC\Desktop\PFE\team_v3\var\cache\dev/pools/system</argument>
+      <argument>/home/tahani/Bureau/PFE/team_v3/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -4925,12 +4936,12 @@
     <service id="lexik_jwt_authentication.security.jwt_user_provider" class="Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserProvider">
       <argument></argument>
     </service>
-    <service id=".1_TokenStorage~AOfy3BK" class="Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage"/>
+    <service id=".1_TokenStorage~_NaG2Fr" class="Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage"/>
     <service id="lexik_jwt_authentication.security.guard.jwt_token_authenticator" class="Lexik\Bundle\JWTAuthenticationBundle\Security\Guard\JWTTokenAuthenticator">
       <argument type="service" id="lexik_jwt_authentication.jwt_manager"/>
       <argument type="service" id="debug.event_dispatcher"/>
       <argument type="service" id="lexik_jwt_authentication.extractor.chain_extractor"/>
-      <argument type="service" id=".1_TokenStorage~AOfy3BK"/>
+      <argument type="service" id=".1_TokenStorage~_NaG2Fr"/>
       <argument>null</argument>
       <deprecated package="lexik/jwt-authentication-bundle" version="2.7">The "%service_id%" service is deprecated and will be removed in 3.0, use the new "jwt" authenticator instead.</deprecated>
     </service>
@@ -4978,6 +4989,9 @@
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\AdminController" class="App\Controller\AdminController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\AdminController" class="App\Controller\AdminController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\AdminController" class="App\Controller\AdminController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\AnalysesController" class="App\Controller\AnalysesController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\AnalysesController" class="App\Controller\AnalysesController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\AnalysesController" class="App\Controller\AnalysesController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\DashboardController" class="App\Controller\DashboardController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\DashboardController" class="App\Controller\DashboardController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\DashboardController" class="App\Controller\DashboardController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -5006,6 +5020,8 @@
     <service id=".abstract.instanceof.App\EventListener\PhotographeListener" class="App\EventListener\PhotographeListener" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.App\EventListener\PresidentListener.0.App\EventListener\PresidentListener" class="App\EventListener\PresidentListener" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\EventListener\PresidentListener" class="App\EventListener\PresidentListener" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\AnalysesRepository" class="App\Repository\AnalysesRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\AnalysesRepository" class="App\Repository\AnalysesRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\ContratEntraineurRepository" class="App\Repository\ContratEntraineurRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\ContratEntraineurRepository" class="App\Repository\ContratEntraineurRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\ContratJoueurRepository" class="App\Repository\ContratJoueurRepository" autowire="true" abstract="true"/>
@@ -5544,6 +5560,13 @@
         <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
       </argument>
     </service>
+    <service id=".service_locator.JtngofA" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="analysesRepository" type="service_closure" id="App\Repository\AnalysesRepository"/>
+        <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
+      </argument>
+    </service>
     <service id=".service_locator.ozS3iGU" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -5589,7 +5612,7 @@
         <argument key="serializer" type="service_closure" id="jms_serializer.serializer"/>
       </argument>
     </service>
-    <service id=".service_locator.CuCAdfl" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.x.U739U" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\AdminController::acheterJoueur" type="service_closure" id=".service_locator.cjJGr32"/>
@@ -5635,6 +5658,8 @@
         <argument key="App\Controller\AdminController::updateTalent" type="service_closure" id=".service_locator.4jseNyd"/>
         <argument key="App\Controller\AdminController::updateTask" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\AdminController::updateTrainingSession" type="service_closure" id=".service_locator.o6sN0hZ"/>
+        <argument key="App\Controller\AnalysesController::create" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\AnalysesController::update" type="service_closure" id=".service_locator.JtngofA"/>
         <argument key="App\Controller\EquipeController::createEquipe" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\EquipeController::getEquipe" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\EquipeController::updatePresident" type="service_closure" id=".service_locator.o6sN0hZ"/>
@@ -5710,6 +5735,8 @@
         <argument key="App\Controller\AdminController:updateTalent" type="service_closure" id=".service_locator.4jseNyd"/>
         <argument key="App\Controller\AdminController:updateTask" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\AdminController:updateTrainingSession" type="service_closure" id=".service_locator.o6sN0hZ"/>
+        <argument key="App\Controller\AnalysesController:create" type="service_closure" id=".service_locator.CsMkqUa"/>
+        <argument key="App\Controller\AnalysesController:update" type="service_closure" id=".service_locator.JtngofA"/>
         <argument key="App\Controller\EquipeController:createEquipe" type="service_closure" id=".service_locator.CsMkqUa"/>
         <argument key="App\Controller\EquipeController:getEquipe" type="service_closure" id=".service_locator.o6sN0hZ"/>
         <argument key="App\Controller\EquipeController:updatePresident" type="service_closure" id=".service_locator.o6sN0hZ"/>
@@ -5839,9 +5866,10 @@
         <argument key="App\EventListener\PresidentListener" type="service_closure" id="App\EventListener\PresidentListener"/>
       </argument>
     </service>
-    <service id=".service_locator.QDYqIk9" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.RcAEws0" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="App\Repository\AnalysesRepository" type="service_closure" id="App\Repository\AnalysesRepository"/>
         <argument key="App\Repository\ContratEntraineurRepository" type="service_closure" id="App\Repository\ContratEntraineurRepository"/>
         <argument key="App\Repository\ContratJoueurRepository" type="service_closure" id="App\Repository\ContratJoueurRepository"/>
         <argument key="App\Repository\ContratKineRepository" type="service_closure" id="App\Repository\ContratKineRepository"/>
@@ -6146,6 +6174,12 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.O2p6Lk7" method="withContext"/>
     </service>
+    <service id=".service_locator.O2p6Lk7.App\Controller\AnalysesController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\AnalysesController"/>
+      <argument>App\Controller\AnalysesController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.O2p6Lk7" method="withContext"/>
+    </service>
     <service id=".service_locator.O2p6Lk7.App\Controller\DashboardController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\DashboardController"/>
       <argument>App\Controller\DashboardController</argument>
@@ -6298,6 +6332,7 @@
         <argument type="collection">
           <argument>App\Kernel</argument>
           <argument>App\Controller\AdminController</argument>
+          <argument>App\Controller\AnalysesController</argument>
           <argument>App\Controller\DashboardController</argument>
           <argument>App\Controller\EquipeController</argument>
           <argument>App\Controller\FanController</argument>
@@ -7266,7 +7301,7 @@
     <service id="Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface" alias="lexik_jwt_authentication.encoder.lcobucci"/>
     <service id="lexik_jwt_authentication.key_loader" alias="lexik_jwt_authentication.key_loader.raw" public="true"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.w7.f4fT" public="true"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.CuCAdfl"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.x.U739U"/>
     <service id="jms_serializer.authorization_checker" alias="security.authorization_checker" public="true"/>
     <service id="fos_rest.serializer" alias="fos_rest.serializer.jms"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
@@ -7279,7 +7314,8 @@
     <service id=".service_locator.dTaHD7m" alias=".service_locator.04rvWvA"/>
     <service id=".service_locator.wXLaEHu" alias=".service_locator.I4Ot7PZ"/>
     <service id=".service_locator.2x8EHXZ" alias=".service_locator.cjJGr32"/>
-    <service id=".service_locator.bKugtJy" alias=".service_locator.CuCAdfl"/>
+    <service id=".service_locator.bOAhnve" alias=".service_locator.JtngofA"/>
+    <service id=".service_locator.PeSeVFM" alias=".service_locator.x.U739U"/>
     <service id=".service_locator.LMuqDDe" alias=".service_locator.VHsrTPK"/>
     <service id=".service_locator.jUv.zyj" alias=".service_locator.O2p6Lk7"/>
     <service id="event_dispatcher" alias="debug.event_dispatcher" public="true"/>
@@ -7311,6 +7347,7 @@
     <service id=".service_locator.I9zgdhE" alias=".service_locator.aeiw.FA"/>
     <service id=".service_locator.XfZ_Auc" alias=".service_locator.cjJGr32"/>
     <service id=".service_locator.9e2t_lq" alias=".service_locator.CsMkqUa"/>
+    <service id=".service_locator.x6KlCwj" alias=".service_locator.JtngofA"/>
     <service id=".service_locator.QPctxPr" alias=".service_locator.ozS3iGU"/>
     <service id=".service_locator.xvBvVB3" alias=".service_locator.pdykhYj"/>
     <service id=".service_locator.AKNwnbX" alias=".service_locator.sTkNa8s"/>
