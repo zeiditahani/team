@@ -8,6 +8,8 @@ use App\Entity\Logistic;
 use App\Entity\Matchs;
 use App\Entity\Ticket;
 use Doctrine\ORM\EntityManagerInterface;
+use Stripe\PaymentIntent;
+use Stripe\Stripe;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -380,72 +382,63 @@ final class MatchController extends AbstractController
             return new JsonResponse(['error' => 'Aucun ticket disponible'], 400);
         }
 
-        // Récupérer les données de la carte bancaire depuis la requête
+        // Récupérer le token et les informations de paiement depuis la requête
         $data = json_decode($request->getContent(), true);
-        if (!isset($data['numCarte'], $data['dateExpiration'], $data['cvv'], $data['nom'], $data['email'])) {
-            return new JsonResponse(['error' => 'Données bancaires et personnelles manquantes'], 400);
+
+        if (!isset($data['token'], $data['nom'], $data['email'])) {
+            return new JsonResponse(['error' => 'Données manquantes'], 400);
         }
 
-        // Validation des données bancaires
-        if (!$this->validerNumCarte($data['numCarte'])) {
-            return new JsonResponse(['error' => 'Numéro de carte invalide'], 400);
+        // Initialiser Stripe avec ta clé API
+        Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
+
+        try {
+            // Créer un PaymentIntent
+            $paymentIntent = PaymentIntent::create([
+                'amount' => $ticket->getPrix() *100,  // Montant en centimes
+                'currency' => 'usd',  // La devise (tu peux utiliser 'eur' ou 'tnd' selon ta configuration)
+                'payment_method' => $data['token'],  // Utiliser le token généré par Stripe
+                //'confirmation_method' => 'manual',
+                'confirm' => true,
+                'automatic_payment_methods' => [
+                    'enabled' => true,  // Active la gestion automatique des méthodes de paiement
+                    'allow_redirects' => 'never'  // Empêche les redirections
+                ],
+            ]);
+
+            // Vérification du statut du paiement
+            if ($paymentIntent->status !== 'succeeded') {
+                return new JsonResponse(['error' => 'Le paiement a échoué'], 400);
+            }
+
+            // Décrémenter le nombre de tickets disponibles
+            $ticket->setNbTicketDispo($ticket->getNbTicketDispo() - 1);
+            $reference = $this->genererReferenceAchat();
+
+            // Si plus de tickets disponibles, mettre à jour le statut du ticket à "rupture"
+            if ($ticket->getNbTicketDispo() == 0) {
+                $ticket->setStatut("rupture");
+            }
+
+            $entityManager->flush();
+
+            
+
+            return new JsonResponse([
+                'message' => 'Achat de ticket effectué avec succès, veuillez garder votre référence !',
+                'ticket' => [
+                    'type' => $ticket->getType(),
+                    'prix' => $ticket->getPrix(),
+                    'reference' => $reference,
+                    'nom' => $data['nom'],
+                    'email' => $data['email'],
+                    'payment_status' => $paymentIntent->status
+                ]
+            ], 200);
+
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 400);
         }
-
-        if (!$this->validerDateExpiration($data['dateExpiration'])) {
-            return new JsonResponse(['error' => 'Date d\'expiration invalide'], 400);
-        }
-
-        if (!$this->validerCvv($data['cvv'])) {
-            return new JsonResponse(['error' => 'CVV invalide'], 400);
-        }
-
-        if (strlen($data['nom']) < 3) {
-            return new JsonResponse(['error' => 'Le nom doit contenir au moins 3 caractères'], 400);
-        }
-    
-        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            return new JsonResponse(['error' => 'L\'email est invalide'], 400);
-        }
-
-        // Décrémenter le nombre de tickets disponibles
-        $ticket->setNbTicketDispo($ticket->getNbTicketDispo() - 1);
-        $reference = $this->genererReferenceAchat();
-
-        $entityManager->flush();
-
-        if($ticket->getNbTicketDispo() == 0) {
-            $ticket->setStatut("rupture"); 
-        }
-        $entityManager->flush();
-        return new JsonResponse([
-            'message' => 'Achat de ticket effectué avec succès, veuillez garder votre reference ! ',
-            'ticket' => [
-                'type' => $ticket->getType(),
-                'prix' => $ticket->getPrix(),
-                'nbTicketDispo' => $ticket->getNbTicketDispo(),
-                'nom' => $data['nom'],
-                'email' => $data['email'],
-                'reference' => $reference
-            ]
-        ], 200);
-    }
-
-    private function validerNumCarte(string $numCarte): bool
-    {
-        // Vérification du format du numéro de carte (exemple : 16 chiffres)
-        return preg_match('/^\d{16}$/', $numCarte);
-    }
-
-    private function validerDateExpiration(string $dateExpiration): bool
-    {
-        // Vérifier si la date d'expiration est au format MM/AA
-        return preg_match('/^(0[1-9]|1[0-2])\/\d{2}$/', $dateExpiration);
-    }
-
-    private function validerCvv(string $cvv): bool
-    {
-        // Vérification que le CVV est bien composé de 3 chiffres
-        return preg_match('/^\d{3}$/', $cvv);
     }
 
     private function genererReferenceAchat(): string
